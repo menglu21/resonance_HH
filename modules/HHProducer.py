@@ -264,10 +264,10 @@ class HHProducer(Module):
       l2_mass=tightMuons[1].M()
       l2_id=tightMuons_id[1]
       l2_pdgid=tightMuons_pdgid[1]
-      mll=(tightMuons_pdgid[0]+tightMuons[1]).M()
-      zlep_pt=(tightMuons_pdgid[0]+tightMuons[1]).Pt()
-      zlep_eta=(tightMuons_pdgid[0]+tightMuons[1]).Eta()
-      zlep_phi=(tightMuons_pdgid[0]+tightMuons[1]).Phi()
+      mll=(tightMuons[0]+tightMuons[1]).M()
+      zlep_pt=(tightMuons[0]+tightMuons[1]).Pt()
+      zlep_eta=(tightMuons[0]+tightMuons[1]).Eta()
+      zlep_phi=(tightMuons[0]+tightMuons[1]).Phi()
     if len(tightElectrons)==2:
       l1_pt=tightElectrons[0].Pt()
       l1_eta=tightElectrons[0].Eta()
@@ -281,10 +281,10 @@ class HHProducer(Module):
       l2_mass=tightElectrons[1].M()
       l2_id=tightElectrons_id[1]
       l2_pdgid=tightElectrons_pdgid[1]
-      mll=(tightElectrons_pdgid[0]+tightElectrons[1]).M()
-      zlep_pt=(tightElectrons_pdgid[0]+tightElectrons[1]).Pt()
-      zlep_eta(tightElectrons_pdgid[0]+tightElectrons[1]).Eta()
-      zlep_phi=(tightElectrons_pdgid[0]+tightElectrons[1]).Phi()
+      mll=(tightElectrons[0]+tightElectrons[1]).M()
+      zlep_pt=(tightElectrons[0]+tightElectrons[1]).Pt()
+      zlep_eta(tightElectrons[0]+tightElectrons[1]).Eta()
+      zlep_phi=(tightElectrons[0]+tightElectrons[1]).Phi()
 
     tau_v4_temp=TLorentzVector()
     taus = Collection(event, 'Tau')
