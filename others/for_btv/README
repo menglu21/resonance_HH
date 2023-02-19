@@ -1,0 +1,12 @@
+DeepJet_106XUL17SF_V3.csv is combined from reshaping_deepJet_106XUL17_v3.csv and wp_deepJet_106XUL17_v3.csv at https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
+DeepJet_106XUL18SF_V2.csv is combined from reshaping_deepJet_106XUL18_v2.csv and wp_deepJet_106XUL18_v2.csv at https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL18
+
+#2016 files are modified with "csv_convert.py" (a few remove the punctuation " " signed removed!)
+
+N.B: formula does not accept pow(), so replaced accordingly with sqrt()
+
+Further the size was huge so again skimmed with
+
+skim_csv.sh 
+
+Finally used those files for Ul2016

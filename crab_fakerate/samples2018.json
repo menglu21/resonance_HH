@@ -1,0 +1,15 @@
+{
+"EGammaA": ["DoubleEG_A","/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataA.sh"],
+"EGammaB": ["DoubleEG_B","/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataB.sh"],
+"EGammaC": ["DoubleEG_C","/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataC.sh"],
+"EGammaD": ["DoubleEG_D","/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD","crab_script_dataD.sh"],
+"DoubleMuonA": ["DoubleMuon_A","/DoubleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataA.sh"],
+"DoubleMuonB": ["DoubleMuon_B","/DoubleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataB.sh"],
+"DoubleMuonC": ["DoubleMuon_C","/DoubleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD","crab_script_dataC.sh"],
+"DoubleMuonD": ["DoubleMuon_D","/DoubleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD","crab_script_dataD.sh"],
+"dynlo": ["DYnlo","dataset=/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"wjet": ["WJets","/WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"wjetnlo": ["WJetsnlo","/WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"],
+"TTto2L": ["TTTo2L2Nu","/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+"TTto1L": ["TTTo1L","/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"]
+}

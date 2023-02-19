@@ -1,0 +1,44 @@
+
+run create_crab to set up crab configs:
+
+python create_crab.py 2016apv
+
+python create_crab.py 2016
+
+python create_crab.py 2017
+
+python create_crab.py 2018
+
+
+*************************
+data set choice:
+
+the prescale trigger use in electron channel are:
+1. HLT_Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30
+2. HLT_Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30
+3. HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30
+according to https://twiki.cern.ch/twiki/bin/viewauth/CMS/HLTPathsRunIIList, 
+
+for 2016 case:
+trigger 1/2/3 exist in DoubleEG data set, correspond to effective lumis 0.0071/0.0151/0.0641 fb-1, so we will run DoubleEG for 2016 fake electron estimation.
+
+for 2017 case:
+trigger 1/2/3 exist in SingleElectron data set, correspond to effective lumis 0.0038/0.0276/0.0434 fb-1, so we will run SingleElectron for 2017 fake electron estimation.
+
+for 2018 case:
+trigger 1/2/3 exist in EGamma data set, correspond to effective lumis 0.0064/0.039/0.0391 fb-1, so we will run EGamma for 2018  fake electron estimation.
+
+*********
+the prescale trigger use in muon channel are:
+1. HLT_Mu8_TrkIsoVVL
+2. HLT_Mu17_TrkIsoVVL
+according to https://twiki.cern.ch/twiki/bin/viewauth/CMS/HLTPathsRunIIList,
+
+for 2016 case:
+trigger 1/2 exist in DoubleMuon data set, correspond to effective lumis 0.0078/0.22 fb-1, so we will run DoubleMuon for 2016 fake muon estimation.
+
+for 2017 case:
+trigger 1/2 exist in DoubleMuon data set, correspond to effective lumis 0.0027/0.0658 fb-1, so we will run DoubleMuon for 2017 fake muon estimation.
+
+for 2018 case:
+trigger 1/2 exist in DoubleMuon data set, correspond to effective lumis 0.0086/0.046 fb-1, so we will run DoubleMuon for 2017 fake muon estimation.
