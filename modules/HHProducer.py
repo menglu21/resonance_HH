@@ -540,7 +540,7 @@ class HHProducer(Module):
         if q1_id_temp<q2_id_temp:
           zqq_id_item_temp.append((q1_id_temp,q2_id_temp))
           zqq_mass_temp.append(abs((tightLeptons[0]+tightLeptons[1]+q1_v4_temp+q2_v4_temp).M()-125.))
-    zqq_min_item_temp=zbb_mass_temp.index(min(zqq_mass_temp))
+    zqq_min_item_temp=zqq_mass_temp.index(min(zqq_mass_temp))
     z_j1_v4_temp=jet_v4_all[zqq_id_item_temp[zqq_min_item_temp][0]]
     z_j2_v4_temp=jet_v4_all[zqq_id_item_temp[zqq_min_item_temp][1]]
 
