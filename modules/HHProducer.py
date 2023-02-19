@@ -283,7 +283,7 @@ class HHProducer(Module):
       l2_pdgid=tightElectrons_pdgid[1]
       mll=(tightElectrons[0]+tightElectrons[1]).M()
       zlep_pt=(tightElectrons[0]+tightElectrons[1]).Pt()
-      zlep_eta(tightElectrons[0]+tightElectrons[1]).Eta()
+      zlep_eta=(tightElectrons[0]+tightElectrons[1]).Eta()
       zlep_phi=(tightElectrons[0]+tightElectrons[1]).Phi()
 
     tau_v4_temp=TLorentzVector()
