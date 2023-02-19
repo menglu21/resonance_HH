@@ -286,6 +286,23 @@ class HHProducer(Module):
       zlep_eta=(tightElectrons[0]+tightElectrons[1]).Eta()
       zlep_phi=(tightElectrons[0]+tightElectrons[1]).Phi()
 
+    self.out.fillBranch("l1_pt",l1_pt)
+    self.out.fillBranch("l1_eta",l1_eta)
+    self.out.fillBranch("l1_phi",l1_phi)
+    self.out.fillBranch("l1_mass",l1_mass)
+    self.out.fillBranch("l1_id",l1_id)
+    self.out.fillBranch("l1_pdgid",l1_pdgid)
+    self.out.fillBranch("l2_pt",l2_pt)
+    self.out.fillBranch("l2_eta",l2_eta)
+    self.out.fillBranch("l2_phi",l2_phi)
+    self.out.fillBranch("l2_mass",l2_mass)
+    self.out.fillBranch("l2_id",l2_id)
+    self.out.fillBranch("l2_pdgid",l2_pdgid)
+    self.out.fillBranch("mll",mll)
+    self.out.fillBranch("zlep_pt",zlep_pt)
+    self.out.fillBranch("zlep_eta",zlep_eta)
+    self.out.fillBranch("zlep_phi",zlep_phi)
+
     tau_v4_temp=TLorentzVector()
     taus = Collection(event, 'Tau')
     nHad_tau=0
