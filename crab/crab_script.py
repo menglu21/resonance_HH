@@ -11,6 +11,11 @@ from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.eleIDSFProducer i
 from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.muonScaleResProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.muonIDISOSFProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.HHProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.ZandLepSubSelector import *
+from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.ShuffleSubGenJet import *
+from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.ElectronSelector import *
+from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.MuonSelector import *
+from PhysicsTools.NanoAODTools.postprocessing.analysis.modules.GenJetNoVlepMerger import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
@@ -29,13 +34,13 @@ def main():
 
   if opt.ismc:
     if opt.year == "2016a":
-      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2016_preAPV(),PrefCorr2016(),muonIDISOSF2016apv(),muonScaleRes2016a(),eleRECOSF2016apv(),eleIDSF2016apv(),jmeCorrections_UL2016APVMC(),btagSF2016ULapv(), HH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
+      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2016_preAPV(),GenJetAK4NoVlepMerger(),GenJetAK8NoVlepMerger(),ShuffleSubGenJet(),PrefCorr2016(),muonIDISOSF2016apv(),muonScaleRes2016a(),eleRECOSF2016apv(),eleIDSF2016apv(),jmeCorrections_UL2016APVMC(),btagSF2016ULapv(), HH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
     if opt.year == "2016b":
-      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2016_postAPV(),PrefCorr2016(),muonIDISOSF2016(),muonScaleRes2016b(),eleRECOSF2016(),eleIDSF2016(),jmeCorrections_UL2016MC(),btagSF2016UL(), HH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
+      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2016_postAPV(),GenJetAK4NoVlepMerger(),GenJetAK8NoVlepMerger(),ShuffleSubGenJet(),PrefCorr2016(),muonIDISOSF2016(),muonScaleRes2016b(),eleRECOSF2016(),eleIDSF2016(),jmeCorrections_UL2016MC(),btagSF2016UL(), HH2016()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
     if opt.year == "2017":
-      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2017(),PrefCorr2017(),muonIDISOSF2017(),muonScaleRes2017(),eleRECOSF2017(),eleIDSF2017(), jmeCorrections_UL2017MC(),btagSF2017UL(), HH2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
+      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2017(),GenJetAK4NoVlepMerger(),GenJetAK8NoVlepMerger(),SubGenJetAK8NoVlepMerger(),ShuffleSubGenJet(),PrefCorr2017(),muonIDISOSF2017(),muonScaleRes2017(),eleRECOSF2017(),eleIDSF2017(),MuonProducer(),ElectronProducer(),ZandLepSubProducer(),jmeCorrections_UL2017MC(),fatjmeCorrections_UL2017MC(), HH2017()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
     if opt.year == "2018":
-      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2018(),muonIDISOSF2018(),muonScaleRes2018(),eleRECOSF2018(),eleIDSF2018(),jmeCorrections_UL2018MC(), btagSF2018UL(),HH2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
+      p = PostProcessor(".", inputFiles(), modules=[countHistogramsModule(),puWeight_2018(),GenJetAK4NoVlepMerger(),GenJetAK8NoVlepMerger(),ShuffleSubGenJet(),muonIDISOSF2018(),muonScaleRes2018(),eleRECOSF2018(),eleIDSF2018(),jmeCorrections_UL2018MC(), btagSF2018UL(),HH2018()], provenance=True,fwkJobReport=True, jsonInput=runsAndLumis(),outputbranchsel="keep_and_drop.txt")
 
 
 # Sequence for data
