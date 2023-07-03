@@ -18,9 +18,11 @@ class ElectronSelector(Module):
   def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
     self.out = wrappedOutputTree
     self.out.branch("GoodElectron_pt", "F", lenVar="nGoodElectron")
+    self.out.branch("GoodElectron_rawpt", "F", lenVar="nGoodElectron")
     self.out.branch("GoodElectron_eta", "F", lenVar="nGoodElectron")
     self.out.branch("GoodElectron_phi", "F", lenVar="nGoodElectron")
     self.out.branch("GoodElectron_mass", "F", lenVar="nGoodElectron")
+    self.out.branch("GoodElectron_rawmass", "F", lenVar="nGoodElectron")
     self.out.branch("GoodElectron_id", "I", lenVar="nGoodElectron")
     self.out.branch("GoodElectron_pdgid", "I", lenVar="nGoodElectron")
     self.out.branch("LooseElectron_pt", "F", lenVar="nLooseElectron")
@@ -38,9 +40,11 @@ class ElectronSelector(Module):
     electrons = Collection(event, 'Electron')
 
     goodElectrons_pt = []
+    goodElectrons_rawpt = []
     goodElectrons_eta = []
     goodElectrons_phi = []
     goodElectrons_mass = []
+    goodElectrons_rawmass = []
     goodElectrons_pdgid = []
     goodElectrons_id = []
     looseElectrons_pt = []
@@ -55,10 +59,13 @@ class ElectronSelector(Module):
       if not electrons[iele].mvaFall17V2noIso_WPL: continue
 
       if electrons[iele].mvaFall17V2noIso_WP90 and electrons[iele].pt>15:
+        # here need to get the pt before and after Egamma correction, the former one is used for jet-subtraction, the latter one is used for signal electron
         goodElectrons_pt.append(electrons[iele].pt)
+        goodElectrons_rawpt.append(electrons[iele].pt/electrons[iele].eCorr)
         goodElectrons_eta.append(electrons[iele].eta)
         goodElectrons_phi.append(electrons[iele].phi)
         goodElectrons_mass.append(electrons[iele].mass)
+        goodElectrons_rawmass.append(electrons[iele].mass/electrons[iele].eCorr)
         goodElectrons_pdgid.append(electrons[iele].pdgId)
         goodElectrons_id.append(iele)
       else:
@@ -70,9 +77,11 @@ class ElectronSelector(Module):
         looseElectrons_id.append(iele)
 
     self.out.fillBranch("GoodElectron_pt", goodElectrons_pt)
+    self.out.fillBranch("GoodElectron_rawpt", goodElectrons_rawpt)
     self.out.fillBranch("GoodElectron_eta", goodElectrons_eta)
     self.out.fillBranch("GoodElectron_phi", goodElectrons_phi)
     self.out.fillBranch("GoodElectron_mass", goodElectrons_mass)
+    self.out.fillBranch("GoodElectron_rawmass", goodElectrons_rawmass)
     self.out.fillBranch("GoodElectron_id", goodElectrons_id)
     self.out.fillBranch("GoodElectron_pdgid", goodElectrons_pdgid)
     self.out.fillBranch("LooseElectron_pt", looseElectrons_pt)

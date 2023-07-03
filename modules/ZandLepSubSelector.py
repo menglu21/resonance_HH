@@ -58,16 +58,21 @@ class ZandLepSubSelector(Module):
     self.out.branch("FatJetNoVlep_drl1", "F", lenVar="nFatJetNoVlep")
     self.out.branch("FatJetNoVlep_drl2", "F", lenVar="nFatJetNoVlep")
     self.out.branch("FatJetNoVlep_dRinit", "F", lenVar="nFatJetNoVlep")
+    self.out.branch("FatJetNoVlep_bbvsccqq", "F", lenVar="nFatJetNoVlep")
     self.out.branch("mu_channel", "B")
     self.out.branch("l1_pt", "F")
+    self.out.branch("l1_rawpt", "F")
     self.out.branch("l1_eta", "F")
     self.out.branch("l1_phi", "F")
     self.out.branch("l1_mass", "F")
+    self.out.branch("l1_rawmass", "F")
     self.out.branch("l1_relPtl2", "F")
     self.out.branch("l2_pt", "F")
+    self.out.branch("l2_rawpt", "F")
     self.out.branch("l2_eta", "F")
     self.out.branch("l2_phi", "F")
     self.out.branch("l2_mass", "F")
+    self.out.branch("l2_rawmass", "F")
     self.out.branch("l2_relPtl1", "F")
     self.out.branch("drll", "F")
     self.out.branch("detall", "F")
@@ -131,15 +136,20 @@ class ZandLepSubSelector(Module):
     FatJetNoVlep_drl1=[]
     FatJetNoVlep_drl2=[]
     FatJetNoVlep_dRinit=[]
+    FatJetNoVlep_bbvsccqq=[]
     l1_pt=-99
+    l1_rawpt=-99
     l1_eta=-99
     l1_phi=-99
     l1_mass=-99
+    l1_rawmass=-99
     l1_relPtl2=-99
     l2_pt=-99
+    l2_rawpt=-99
     l2_eta=-99
     l2_phi=-99
     l2_mass=-99
+    l2_rawmass=-99
     l2_relPtl1=-99
     drll=-99
     detall=-99
@@ -155,30 +165,42 @@ class ZandLepSubSelector(Module):
 
     l1v4_tmp=TLorentzVector()
     l2v4_tmp=TLorentzVector()
+    l1v4raw_tmp=TLorentzVector()
+    l2v4raw_tmp=TLorentzVector()
 
     if event.nGoodMuon==2:
       mu_channel=True
       l1_pt=goodmuons[0].pt
+      l1_rawpt=goodmuons[0].rawpt
       l1_eta=goodmuons[0].eta
       l1_phi=goodmuons[0].phi
       l1_mass=goodmuons[0].mass
+      l1_rawmass=goodmuons[0].rawmass
       l2_pt=goodmuons[1].pt
+      l2_rawpt=goodmuons[1].rawpt
       l2_eta=goodmuons[1].eta
       l2_phi=goodmuons[1].phi
       l2_mass=goodmuons[1].mass
+      l2_rawmass=goodmuons[1].rawmass
     else:
       mu_channel=False
       l1_pt=goodeles[0].pt
+      l1_rawpt=goodeles[0].rawpt
       l1_eta=goodeles[0].eta
       l1_phi=goodeles[0].phi
       l1_mass=goodeles[0].mass
+      l1_rawmass=goodeles[0].rawmass
       l2_pt=goodeles[1].pt
+      l2_rawpt=goodeles[1].rawpt
       l2_eta=goodeles[1].eta
       l2_phi=goodeles[1].phi
       l2_mass=goodeles[1].mass
+      l2_rawmass=goodeles[1].rawmass
 
     l1v4_tmp.SetPtEtaPhiM(l1_pt,l1_eta,l1_phi,l1_mass)
     l2v4_tmp.SetPtEtaPhiM(l2_pt,l2_eta,l2_phi,l2_mass)
+    l1v4raw_tmp.SetPtEtaPhiM(l1_rawpt,l1_eta,l1_phi,l1_rawmass)
+    l2v4raw_tmp.SetPtEtaPhiM(l2_rawpt,l2_eta,l2_phi,l2_rawmass)
     l1_relPtl2=l1v4_tmp.Vect().Cross(l2v4_tmp.Vect().Unit()).Mag()
     l2_relPtl1=l2v4_tmp.Vect().Cross(l1v4_tmp.Vect().Unit()).Mag()
     drll=l1v4_tmp.DeltaR(l2v4_tmp)
@@ -215,6 +237,8 @@ class ZandLepSubSelector(Module):
 
         jetmatched_mu1=-1
         jetmatched_mu2=-1
+
+        # re-select the matched muons except the signal muon overlap with Jets
         if event.nMuon>0:
           muv4_tmp=TLorentzVector()
           for imu in range(0,event.nMuon):
@@ -236,10 +260,32 @@ class ZandLepSubSelector(Module):
       min_index_ak4jet_drl1=ak4jet_drl1_.index(min(ak4jet_drl1_))
       min_index_ak4jet_drl2=ak4jet_drl2_.index(min(ak4jet_drl2_))
 
+      # be careful of the case: lepton overlap with jet but not clustered in the jet, which mean even they have dR smaller than 0.4, the subtraction is not needed otherwise it will cause negative Jet mass
+      
       if min(ak4jet_drl1_)<0.4:
-        ak4jet_arr_[min_index_ak4jet_drl1]=ak4jet_arr_[min_index_ak4jet_drl1]-l1v4_tmp
-      if min(ak4jet_drl2_)<0.4:
-        ak4jet_arr_[min_index_ak4jet_drl2]=ak4jet_arr_[min_index_ak4jet_drl2]-l2v4_tmp
+        if min(ak4jet_drl2_)<0.4:
+          # the closest jet of l1 and l2 are the same one
+          if min_index_ak4jet_drl1==min_index_ak4jet_drl2:
+            if (ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp-l2v4raw_tmp).M()>0:
+              ak4jet_arr_[min_index_ak4jet_drl1]=ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp-l2v4raw_tmp
+            elif (ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp).M()>0:
+              ak4jet_arr_[min_index_ak4jet_drl1]=ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp
+            elif (ak4jet_arr_[min_index_ak4jet_drl1]-l2v4raw_tmp).M()>0:
+              ak4jet_arr_[min_index_ak4jet_drl1]=ak4jet_arr_[min_index_ak4jet_drl1]-l2v4raw_tmp
+          # the closest jet of l1 and l2 are not the same one
+          else:
+            if (ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp).M()>0:
+              ak4jet_arr_[min_index_ak4jet_drl1]=ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp
+            if (ak4jet_arr_[min_index_ak4jet_drl2]-l2v4raw_tmp).M()>0:
+              ak4jet_arr_[min_index_ak4jet_drl2]=ak4jet_arr_[min_index_ak4jet_drl2]-l2v4raw_tmp
+        else:
+          if (ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp).M()>0:
+            ak4jet_arr_[min_index_ak4jet_drl1]=ak4jet_arr_[min_index_ak4jet_drl1]-l1v4raw_tmp
+      else:
+        if min(ak4jet_drl2_)<0.4:
+          if (ak4jet_arr_[min_index_ak4jet_drl2]-l2v4raw_tmp).M()>0:
+            ak4jet_arr_[min_index_ak4jet_drl2]=ak4jet_arr_[min_index_ak4jet_drl2]-l2v4raw_tmp
+
 
       for ij in range(0,event.nJet):
 
@@ -247,7 +293,8 @@ class ZandLepSubSelector(Module):
         JetNoVlep_phi.append(ak4jet_arr_[ij].Phi())
         JetNoVlep_id.append(ij)
 
-        if (min(ak4jet_drl1_)<0.4 or min(ak4jet_drl2_)<0.4) and (ij==min_index_ak4jet_drl1 or ij==min_index_ak4jet_drl2):
+        # if jet undergo the lepton subtraction, store the raw pt and store 0 as the rawFactor
+        if not ( ak4jet_arr_[ij].Pt()== ak4jet_arr2_[ij].Pt() ):
           JetNoVlep_rawFactor.append(0.0)
           JetNoVlep_pt.append(ak4jet_arr_[ij].Pt())
           JetNoVlep_mass.append(ak4jet_arr_[ij].M())
@@ -295,6 +342,10 @@ class ZandLepSubSelector(Module):
     # re-calculate fatjet information after leptons subtraction
     if event.nFatJet>0:
       for ij in range(0,event.nFatJet):
+        if (recofatjets[ij].particleNetMD_Xbb+recofatjets[ij].particleNetMD_Xcc+recofatjets[ij].particleNetMD_Xqq)==0:
+          FatJetNoVlep_bbvsccqq.append(0)
+        else:
+          FatJetNoVlep_bbvsccqq.append(recofatjets[ij].particleNetMD_Xbb/(recofatjets[ij].particleNetMD_Xbb+recofatjets[ij].particleNetMD_Xcc+recofatjets[ij].particleNetMD_Xqq))
         FatJetNoVlep_area.append(recofatjets[ij].area)
         FatJetNoVlep_jetId.append(recofatjets[ij].jetId)
         FatJetNoVlep_subJetIdx1.append(recofatjets[ij].subJetIdx1)
@@ -315,18 +366,23 @@ class ZandLepSubSelector(Module):
           FatJetNoVlep_overlapl2.append(1)
         else:
           FatJetNoVlep_overlapl2.append(0)
-        if fatj_overlap_l1>0:
-          fatjetv4_tmp=fatjetv4_tmp - l1v4_tmp
-        if fatj_overlap_l2>0:
-          fatjetv4_tmp=fatjetv4_tmp - l2v4_tmp
 
+        if fatj_overlap_l1>0:
+          if fatj_overlap_l2>0:
+            if (fatjetv4_tmp - l1v4raw_tmp - l2v4raw_tmp).M()>0:
+              fatjetv4_tmp=fatjetv4_tmp - l1v4raw_tmp - l2v4raw_tmp
+            elif (fatjetv4_tmp - l1v4raw_tmp).M()>0:
+              fatjetv4_tmp=fatjetv4_tmp - l1v4raw_tmp
+            elif (fatjetv4_tmp - l2v4raw_tmp).M()>0:
+              fatjetv4_tmp=fatjetv4_tmp - l2v4raw_tmp
 
         FatJetNoVlep_eta.append(fatjetv4_tmp.Eta())
         FatJetNoVlep_phi.append(fatjetv4_tmp.Phi())
         FatJetNoVlep_id.append(ij)
         FatJetNoVlep_PNmass.append(event.FatJet_particleNet_mass[ij])
         FatJetNoVlep_SDmass.append(event.FatJet_msoftdrop[ij])
-        if fatj_overlap_l1 or fatj_overlap_l2:
+
+        if not (fatjetv4_tmp.Pt() == fatjetv4_tmp2.Pt()):
           FatJetNoVlep_rawFactor.append(0.0)
           FatJetNoVlep_pt.append(fatjetv4_tmp.Pt())
           FatJetNoVlep_mass.append(fatjetv4_tmp.M())
@@ -334,11 +390,12 @@ class ZandLepSubSelector(Module):
           FatJetNoVlep_rawFactor.append(recofatjets[ij].rawFactor)
           FatJetNoVlep_pt.append(recofatjets[ij].pt)
           FatJetNoVlep_mass.append(recofatjets[ij].mass)
+
         FatJetNoVlep_drl1.append(fatjetv4_tmp.DeltaR(l1v4_tmp))
         FatJetNoVlep_drl2.append(fatjetv4_tmp.DeltaR(l2v4_tmp))
         FatJetNoVlep_dRinit.append(fatjetv4_tmp.DeltaR(fatjetv4_tmp2))
 
-    FatJetNoVlep_array = sorted(zip(FatJetNoVlep_pt,FatJetNoVlep_eta,FatJetNoVlep_phi,FatJetNoVlep_mass,FatJetNoVlep_rawFactor,FatJetNoVlep_id,FatJetNoVlep_overlapl1,FatJetNoVlep_overlapl2,FatJetNoVlep_area,FatJetNoVlep_jetId,FatJetNoVlep_subJetIdx1,FatJetNoVlep_subJetIdx2,FatJetNoVlep_drl1,FatJetNoVlep_drl2,FatJetNoVlep_dRinit,FatJetNoVlep_PNmass,FatJetNoVlep_SDmass), key=lambda x: x[0], reverse=True)
+    FatJetNoVlep_array = sorted(zip(FatJetNoVlep_pt,FatJetNoVlep_eta,FatJetNoVlep_phi,FatJetNoVlep_mass,FatJetNoVlep_rawFactor,FatJetNoVlep_id,FatJetNoVlep_overlapl1,FatJetNoVlep_overlapl2,FatJetNoVlep_area,FatJetNoVlep_jetId,FatJetNoVlep_subJetIdx1,FatJetNoVlep_subJetIdx2,FatJetNoVlep_drl1,FatJetNoVlep_drl2,FatJetNoVlep_dRinit,FatJetNoVlep_PNmass,FatJetNoVlep_SDmass,FatJetNoVlep_bbvsccqq), key=lambda x: x[0], reverse=True)
     FatJetNoVlep_pt=[x[0] for x in FatJetNoVlep_array]
     FatJetNoVlep_eta=[x[1] for x in FatJetNoVlep_array]
     FatJetNoVlep_phi=[x[2] for x in FatJetNoVlep_array]
@@ -356,6 +413,7 @@ class ZandLepSubSelector(Module):
     FatJetNoVlep_dRinit=[x[14] for x in FatJetNoVlep_array]
     FatJetNoVlep_PNmass=[x[15] for x in FatJetNoVlep_array]
     FatJetNoVlep_SDmass=[x[16] for x in FatJetNoVlep_array]
+    FatJetNoVlep_bbvsccqq=[x[17] for x in FatJetNoVlep_array]
 
 
     # re-calculate subjet information after leptons subtraction
@@ -372,6 +430,7 @@ class ZandLepSubSelector(Module):
         subjetv4_arr_.append(subjetv4_tmp.Clone())
         subjetv4_arr2_.append(subjetv4_tmp.Clone())
 
+      # get the second smallest dr
       if event.nSubJet>1:
         subjet_drl1_copy=subjet_drl1_[:]
         subjet_drl1_copy.remove(min(subjet_drl1_copy))
@@ -396,75 +455,73 @@ class ZandLepSubSelector(Module):
       if event.nSubJet>1:
         if min_drl1<0.4:
           if min_drl2<0.4:
-            # l1 and l2 overlap with the jet
+            # l1 and l2 overlap with the subjet
             if min_index_subjet_drl1==min_index_subjet_drl2:
               # l1 and l2 are closest to the same jet
               sub_tmptmp_v4=TLorentzVector()
-              sub_tmptmp_v4=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp-l2v4_tmp
+              sub_tmptmp_v4=subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp-l2v4raw_tmp
               if sub_tmptmp_v4.M()<0:
-                # the jet subtracting two leptons has negative mass, redo the jet-lep pair
-                if min_drl1<min_drl2:
-                  # l1 is closer to jet than l2
-                  if (subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp).M()>0 and (subjetv4_arr_[submin_index_subjet_drl2]-l2v4_tmp).M()>0:
-                    # such combined pair lead to positive jet mass
-                    subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp
-                    subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4_tmp
-                    lep1subtracted_jetid_=min_index_subjet_drl1
+                # the jet subtracting two leptons has negative mass, try other combination between subjets and leptons
+                if (subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp).M()>0:
+                  subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp
+                  lep1subtracted_jetid_=min_index_subjet_drl1
+                  if submin_drl2<0.4 and (subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp).M()>0:
+                    subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp
                     lep2subtracted_jetid_=submin_index_subjet_drl2
-                  elif (subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp).M()>0 and (subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp).M()>0:
-                    # such combined pair lead to positive jet mass
-                    subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp
-                    subjetv4_arr_[min_index_subjet_drl2]=subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp
+
+                elif (subjetv4_arr_[min_index_subjet_drl1]-l2v4raw_tmp).M()>0:
+                  subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l2v4raw_tmp
+                  lep2subtracted_jetid_=min_index_subjet_drl1
+                  if submin_drl1<0.4 and (subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp).M()>0:
+                    subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp
                     lep1subtracted_jetid_=submin_index_subjet_drl1
-                    lep2subtracted_jetid_=min_index_subjet_drl2
-                  else:
-                    # the other jet subtract two leptons, most likely submin_index_subjet_drl1 will equal to submin_index_subjet_drl2
-                    subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp-l2v4_tmp
-                    lep1subtracted_jetid_=submin_index_subjet_drl1
-                    lep2subtracted_jetid_=submin_index_subjet_drl2
-        
+
                 else:
-                  # l2 is closer to jet than l1
-                  if (subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp).M()>0 and (subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp).M()>0:
-                    subjetv4_arr_[min_index_subjet_drl2]=subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp
-                    subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp
+                  if submin_drl1<0.4 and (subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp).M()>0:
+                    subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp
                     lep1subtracted_jetid_=submin_index_subjet_drl1
-                    lep2subtracted_jetid_=min_index_subjet_drl2
-                  elif (subjetv4_arr_[submin_index_subjet_drl2]-l2v4_tmp).M()>0 and (subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp).M()>0:
-                    subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4_tmp
-                    subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp
-                    lep1subtracted_jetid_=submin_index_subjet_drl2
-                    lep2subtracted_jetid_=min_index_subjet_drl1
-                  else:
-                    subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp-l2v4_tmp
-                    lep1subtracted_jetid_=submin_index_subjet_drl1
-                    lep2subtracted_jetid_=submin_index_subjet_drl1
+                  if submin_drl2<0.4 and (subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp).M()>0:
+                    subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp
+                    lep2subtracted_jetid_=submin_index_subjet_drl2
+
               else:
-                subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp-l2v4_tmp
+                subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp-l2v4raw_tmp
                 lep1subtracted_jetid_=min_index_subjet_drl1
                 lep2subtracted_jetid_=min_index_subjet_drl1
+
             # l1 and l2 overlap with different jets
             else:
-              subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp
-              subjetv4_arr_[min_index_subjet_drl2]=subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp
-              lep1subtracted_jetid_=min_index_subjet_drl1
-              lep2subtracted_jetid_=min_index_subjet_drl2
+              if (subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp).M()>0:
+                subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp
+                lep1subtracted_jetid_=min_index_subjet_drl1
+              elif submin_drl1<0.4 and (subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp).M()>0:
+                subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp
+                lep1subtracted_jetid_=submin_index_subjet_drl1
+
+              if (subjetv4_arr_[min_index_subjet_drl2]-l2v4raw_tmp).M()>0:
+                subjetv4_arr_[min_index_subjet_drl2]=subjetv4_arr_[min_index_subjet_drl2]-l2v4raw_tmp
+                lep2subtracted_jetid_=min_index_subjet_drl2
+              elif submin_drl2<0.4 and (subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp).M()>0:
+                subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp
+                lep2subtracted_jetid_=submin_index_subjet_drl2
 
           else:
             # l2 doesn't overlap with jet
-            if (subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp).M()<0:
-              subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4_tmp
-              lep1subtracted_jetid_=submin_index_subjet_drl1
+            if (subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp).M()<0:
+              if submin_drl1<0.4 and (subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp).M()>0:
+                subjetv4_arr_[submin_index_subjet_drl1]=subjetv4_arr_[submin_index_subjet_drl1]-l1v4raw_tmp
+                lep1subtracted_jetid_=submin_index_subjet_drl1
             else:
-              subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp
+              subjetv4_arr_[min_index_subjet_drl1]=subjetv4_arr_[min_index_subjet_drl1]-l1v4raw_tmp
               lep1subtracted_jetid_=min_index_subjet_drl1
         else:
           if min_drl2<0.4:
-            if (subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp).M()<0:
-              subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4_tmp
-              lep2subtracted_jetid_=submin_index_subjet_drl2
+            if (subjetv4_arr_[min_index_subjet_drl2]-l2v4raw_tmp).M()<0:
+              if submin_drl2<0.4 and (subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp).M()>0:
+                subjetv4_arr_[submin_index_subjet_drl2]=subjetv4_arr_[submin_index_subjet_drl2]-l2v4raw_tmp
+                lep2subtracted_jetid_=submin_index_subjet_drl2
             else:
-              subjetv4_arr_[min_index_subjet_drl2]=subjetv4_arr_[min_index_subjet_drl2]-l2v4_tmp
+              subjetv4_arr_[min_index_subjet_drl2]=subjetv4_arr_[min_index_subjet_drl2]-l2v4raw_tmp
               lep2subtracted_jetid_=min_index_subjet_drl2
 
       # only one subjet
@@ -472,38 +529,29 @@ class ZandLepSubSelector(Module):
         if min_drl1<0.4:
           if min_drl2<0.4:
             sub_tmptmp_v4=TLorentzVector()
-            sub_tmptmp_v4=subjetv4_arr_[min_index_subjet_drl1]-l1v4_tmp-l2v4_tmp
+            sub_tmptmp_v4=subjetv4_arr_[0]-l1v4raw_tmp-l2v4raw_tmp
             if sub_tmptmp_v4.M()<0:
-              if min_drl1<min_drl2:
-                # l1 is closer to jet than l2
-                if (subjetv4_arr_[0]-l1v4_tmp).M()>0:
-                  subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4_tmp
-                  lep1subtracted_jetid_=0
-                elif (subjetv4_arr_[0]-l2v4_tmp).M()>0:
-                  # such combined pair lead to positive jet mass
-                  subjetv4_arr_[0]=subjetv4_arr_[0]-l2v4_tmp
-                  lep2subtracted_jetid_=0
-              else:
-                if (subjetv4_arr_[0]-l2v4_tmp).M()>0:
-                  subjetv4_arr_[0]=subjetv4_arr_[0]-l2v4_tmp
-                  lep2subtracted_jetid_=0
-                else:
-                  subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4_tmp
-                  lep1subtracted_jetid_=0
-            else:
-                subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4_tmp-l2v4_tmp
+              if (subjetv4_arr_[0]-l1v4raw_tmp).M()>0:
+                subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4raw_tmp
                 lep1subtracted_jetid_=0
+              elif (subjetv4_arr_[0]-l2v4raw_tmp).M()>0:
+                subjetv4_arr_[0]=subjetv4_arr_[0]-l2v4raw_tmp
                 lep2subtracted_jetid_=0
+            else:
+              subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4raw_tmp-l2v4raw_tmp
+              lep1subtracted_jetid_=0
+              lep2subtracted_jetid_=0
+
           else:
             # l2 doesn't overlap with jet
-            if (subjetv4_arr_[0]-l1v4_tmp).M()>0:
-              subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4_tmp
+            if (subjetv4_arr_[0]-l1v4raw_tmp).M()>0:
+              subjetv4_arr_[0]=subjetv4_arr_[0]-l1v4raw_tmp
               lep1subtracted_jetid_=0
         else:
           if min_drl2<0.4:
             # l1 doesn't overlap with jet
-            if (subjetv4_arr_[0]-l2v4_tmp).M()>0:
-              subjetv4_arr_[0]=subjetv4_arr_[0]-l2v4_tmp
+            if (subjetv4_arr_[0]-l2v4raw_tmp).M()>0:
+              subjetv4_arr_[0]=subjetv4_arr_[0]-l2v4raw_tmp
 
 
       for ij in range(0,event.nSubJet):
@@ -511,7 +559,7 @@ class ZandLepSubSelector(Module):
         SubJetNoVlep_phi.append(subjetv4_arr_[ij].Phi())
         SubJetNoVlep_dRinit.append(subjetv4_arr_[ij].DeltaR(subjetv4_arr2_[ij]))
         SubJetNoVlep_id.append(ij)
-        if ij==lep1subtracted_jetid_ or ij==lep2subtracted_jetid_:
+        if not ( subjetv4_arr_[ij].Pt()== subjetv4_arr2_[ij].Pt()):
           SubJetNoVlep_rawFactor.append(0.0)
           SubJetNoVlep_pt.append(subjetv4_arr_[ij].Pt())
           SubJetNoVlep_mass.append(subjetv4_arr_[ij].M())
@@ -519,6 +567,7 @@ class ZandLepSubSelector(Module):
           SubJetNoVlep_rawFactor.append(recosubjets[ij].rawFactor)
           SubJetNoVlep_pt.append(recosubjets[ij].pt)
           SubJetNoVlep_mass.append(recosubjets[ij].mass)
+
     # subjet no need to sort by pt, the default ID of subjet is needed to match the subjet id of Fatjet
 
     self.out.fillBranch("JetNoVlep_pt", JetNoVlep_pt)
@@ -542,11 +591,14 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("SubJetNoVlep_phi", SubJetNoVlep_phi)
     self.out.fillBranch("SubJetNoVlep_mass", SubJetNoVlep_mass)
     self.out.fillBranch("SubJetNoVlep_rawFactor", SubJetNoVlep_rawFactor)
+    self.out.fillBranch("SubJetNoVlep_dRinit", SubJetNoVlep_dRinit)
     self.out.fillBranch("SubJetNoVlep_id", SubJetNoVlep_id)
     self.out.fillBranch("FatJetNoVlep_pt", FatJetNoVlep_pt)
     self.out.fillBranch("FatJetNoVlep_eta", FatJetNoVlep_eta)
     self.out.fillBranch("FatJetNoVlep_phi", FatJetNoVlep_phi)
     self.out.fillBranch("FatJetNoVlep_mass", FatJetNoVlep_mass)
+    self.out.fillBranch("FatJetNoVlep_PNmass", FatJetNoVlep_PNmass)
+    self.out.fillBranch("FatJetNoVlep_SDmass", FatJetNoVlep_SDmass)
     self.out.fillBranch("FatJetNoVlep_rawFactor", FatJetNoVlep_rawFactor)
     self.out.fillBranch("FatJetNoVlep_area", FatJetNoVlep_area)
     self.out.fillBranch("FatJetNoVlep_id", FatJetNoVlep_id)
@@ -558,16 +610,21 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("FatJetNoVlep_drl1", FatJetNoVlep_drl1)
     self.out.fillBranch("FatJetNoVlep_drl2", FatJetNoVlep_drl2)
     self.out.fillBranch("FatJetNoVlep_dRinit", FatJetNoVlep_dRinit)
+    self.out.fillBranch("FatJetNoVlep_bbvsccqq", FatJetNoVlep_bbvsccqq)
     self.out.fillBranch("mu_channel", mu_channel)
     self.out.fillBranch("l1_pt", l1_pt)
+    self.out.fillBranch("l1_rawpt", l1_rawpt)
     self.out.fillBranch("l1_eta", l1_eta)
     self.out.fillBranch("l1_phi", l1_phi)
     self.out.fillBranch("l1_mass", l1_mass)
+    self.out.fillBranch("l1_rawmass", l1_rawmass)
     self.out.fillBranch("l1_relPtl2", l1_relPtl2)
     self.out.fillBranch("l2_pt", l2_pt)
+    self.out.fillBranch("l2_rawpt", l2_rawpt)
     self.out.fillBranch("l2_eta", l2_eta)
     self.out.fillBranch("l2_phi", l2_phi)
     self.out.fillBranch("l2_mass", l2_mass)
+    self.out.fillBranch("l2_rawmass", l2_rawmass)
     self.out.fillBranch("l2_relPtl1", l2_relPtl1)
     self.out.fillBranch("drll", drll)
     self.out.fillBranch("detall", detall)

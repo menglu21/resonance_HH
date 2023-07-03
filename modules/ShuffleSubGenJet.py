@@ -48,6 +48,8 @@ class ShuffleSubGenJetMerger(Module):
         for ij8 in range(0,len(GenJetAK8)):
           _subid1=GenJetAK8[ij8].subj1ID
           _subid2=GenJetAK8[ij8].subj2ID
+          
+          # in some rare cases, GenFatJet can only have one subjet
           if _subid1>-1 and _subid2>-1:
             if SubGenJet[_subid1].pt > SubGenJet[_subid2].pt:
               _pt.append(SubGenJet[_subid1].pt)

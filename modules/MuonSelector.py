@@ -22,6 +22,7 @@ class MuonSelector(Module):
     self.out.branch("GoodMuon_eta", "F", lenVar="nGoodMuon")
     self.out.branch("GoodMuon_phi", "F", lenVar="nGoodMuon")
     self.out.branch("GoodMuon_mass", "F", lenVar="nGoodMuon")
+    self.out.branch("GoodMuon_rawmass", "F", lenVar="nGoodMuon")
     self.out.branch("GoodMuon_id", "I", lenVar="nGoodMuon")
     self.out.branch("GoodMuon_pdgid", "I", lenVar="nGoodMuon")
     self.out.branch("LooseMuon_pt", "F", lenVar="nLooseMuon")
@@ -43,6 +44,7 @@ class MuonSelector(Module):
     goodMuons_eta = []
     goodMuons_phi = []
     goodMuons_mass = []
+    goodMuons_rawmass = []
     goodMuons_pdgid = []
     goodMuons_id = []
     looseMuons_pt = []
@@ -57,11 +59,13 @@ class MuonSelector(Module):
       if not (muons[imu].looseId and event.Muon_corrected_pt[imu]>10):continue
 
       if muons[imu].mediumId:
+        # here need to get the pt before and after Rochester correction, the former one is used for jet-subtraction, the latter one is used for signal muon
         goodMuons_pt.append(event.Muon_corrected_pt[imu])
         goodMuons_rawpt.append(muons[imu].pt)
         goodMuons_eta.append(muons[imu].eta)
         goodMuons_phi.append(muons[imu].phi)
         goodMuons_mass.append(muons[imu].mass)
+        goodMuons_rawmass.append(muons[imu].mass)
         goodMuons_pdgid.append(muons[imu].pdgId)
         goodMuons_id.append(imu)
       else:
@@ -77,6 +81,7 @@ class MuonSelector(Module):
     self.out.fillBranch("GoodMuon_eta", goodMuons_eta)
     self.out.fillBranch("GoodMuon_phi", goodMuons_phi)
     self.out.fillBranch("GoodMuon_mass", goodMuons_mass)
+    self.out.fillBranch("GoodMuon_rawmass", goodMuons_mass)
     self.out.fillBranch("GoodMuon_id", goodMuons_id)
     self.out.fillBranch("GoodMuon_pdgid", goodMuons_pdgid)
     self.out.fillBranch("LooseMuon_pt", looseMuons_pt)

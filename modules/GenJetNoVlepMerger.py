@@ -51,6 +51,8 @@ class GenJetNoVlepMerger(Module):
       dr=100.
       if "GenJet"==self.inputs or "SubGenJetAK8"==self.inputs:
         dr=0.4
+
+      # firstly get the subjet of the corresponding AK8Jet
       if "GenJetAK8"==self.inputs:
         dr=0.8
         _subj1ID=[]
@@ -91,15 +93,32 @@ class GenJetNoVlepMerger(Module):
           jetv4_arr_init.append(jetv4_.Clone())
 
 
-      if len(Gendressedlep)>0 and len(jetcoll)>0:
-        for il in range(0,len(Gendressedlep)):
-          lep_dr=[]
-          for ij in range(0,len(jetcoll)):
-            lep_dr.append(jetv4_arr[ij].DeltaR(lepv4_arr[il]))
-   
-          min_index=lep_dr.index(min(lep_dr))
-          if min(lep_dr)<dr:
-            jetv4_arr[min_index]=jetv4_arr[min_index] - lepv4_arr[il]
+      if len(Gendressedlep)>0:
+        if len(jetcoll)>1:
+          for il in range(0,len(Gendressedlep)):
+            lep_dr=[]
+            lep_dr_copy=[]
+            for ij in range(0,len(jetcoll)):
+              lep_dr.append(jetv4_arr[ij].DeltaR(lepv4_arr[il]))
+              lep_dr_copy.append(jetv4_arr[ij].DeltaR(lepv4_arr[il]))
+     
+            # get the minimum deltaR between current lepton and all jets
+            min_index=lep_dr.index(min(lep_dr))
+            lep_dr_copy.remove(min(lep_dr))
+            submin_index=lep_dr.index(min(lep_dr_copy))
+            
+            # subtract lepton from the jet if dR<dr_set. N.B., one lepton can be subtracted from both jet and fatjet, because jet can be the one reconstructed as fatjet
+            if min(lep_dr)<dr:
+              if (jetv4_arr[min_index] - lepv4_arr[il]).M()>0:
+                jetv4_arr[min_index]=jetv4_arr[min_index] - lepv4_arr[il]
+              elif min(lep_dr_copy)<dr and (jetv4_arr[submin_index] - lepv4_arr[il]).M()>0:
+                jetv4_arr[submin_index]=jetv4_arr[submin_index] - lepv4_arr[il]
+
+        elif len(jetcoll)>0:
+          for il in range(0,len(Gendressedlep)):
+            if lepv4_arr[il].DeltaR(jetv4_arr[0])<dr:
+              if (jetv4_arr[0]-lepv4_arr[il]).M()>0:
+                jetv4_arr[0] = jetv4_arr[0]-lepv4_arr[il]
 
       for ij in range(0,len(jetcoll)):
         _pt.append(jetv4_arr[ij].Pt())
@@ -109,6 +128,7 @@ class GenJetNoVlepMerger(Module):
         _initID.append(ij)
         _dRinit.append(jetv4_arr[ij].DeltaR(jetv4_arr_init[ij]))
 
+      # sort those lepton-subtracted GenJets according to their pT
       if "GenJet"==self.inputs:
         jet_sortedArr = sorted(zip(_pt, _eta, _phi, _mass, _initID, _dRinit), key=lambda x: x[0], reverse=True)
 
