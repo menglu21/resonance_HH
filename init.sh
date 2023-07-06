@@ -14,11 +14,10 @@ export WORKING_PATH="$CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postproces
 echo $WORKING_PATH
 
 # change the Jet collection to lepton-subtraction Jet collection
-sed -i "86s/Jet/JetNoVlep/g" $WORKING_PATH/modules/jme/jetmetUncertainties.py
-sed -i "96s/FatJet/FatJetNoVlep/g" $WORKING_PATH/modules/jme/fatJetUncertainties.py
-sed -i "97s/SubJet/SubJetNoVlep/g" $WORKING_PATH/modules/jme/fatJetUncertainties.py
-sed -i "98s/GenJetAK8/GenJetAK8NoVlep/g" $WORKING_PATH/modules/jme/fatJetUncertainties.py
-sed -i "99s/SubGenJetAK8/SubGenJetAK8NoVlep/g" $WORKING_PATH/modules/jme/fatJetUncertainties.py
+mv $WORKING_PATH/analysis/others/*.patch $WORKING_PATH/modules/jme/
+patch -p0 jetmetUncertainties.py < AK4.patch
+patch -p0 fatJetUncertainties.py < AK8.patch
+patch -p0 jetmetHelperRun2.py < helper.patch
 
 if [ "${year}" = "2016apv" ]; then
   echo "Initiating setup for 2016apv......";

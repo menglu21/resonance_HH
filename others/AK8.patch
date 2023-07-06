@@ -1,0 +1,34 @@
+--- fatJetUncertainties_init.py	2023-07-06 11:31:07.000000001 +0200
++++ fatJetUncertainties.py	2023-07-06 11:49:43.000000001 +0200
+@@ -93,10 +93,10 @@
+             self.genSubJetBranchName = None
+             self.doGroomed = False
+         elif "AK8" in jetType:
+-            self.jetBranchName = "FatJet"
+-            self.subJetBranchName = "SubJet"
+-            self.genJetBranchName = "GenJetAK8"
+-            self.genSubJetBranchName = "SubGenJetAK8"
++            self.jetBranchName = "FatJetNoVlep"
++            self.subJetBranchName = "SubJetNoVlep"
++            self.genJetBranchName = "GenJetAK8NoVlep"
++            self.genSubJetBranchName = "SubGenJetAK8NoVlep"
+             if not self.noGroom:
+                 self.doGroomed = True
+                 self.puppiCorrFile = ROOT.TFile.Open(
+@@ -451,7 +451,10 @@
+             jet.mass = jet_mass
+             jets_pt_raw.append(jet_rawpt)
+             jets_mass_raw.append(jet_rawmass)
+-            jets_corr_JEC.append(jet_pt / jet_rawpt)
++            if jet_rawpt>0:
++                jets_corr_JEC.append(jet_pt / jet_rawpt)
++            else:
++                jets_corr_JEC.append(1.)
+ 
+             if not self.isData:
+                 genJet = pairs[jet]
+@@ -935,4 +938,3 @@
+     "2018", "Autumn18_V8_MC", ["Total"], jetType="AK8PFPuppi")
+ fatJetUncertainties2018AK8PuppiAll = lambda: fatJetUncertaintiesProducer(
+     "2018", "Autumn18_V8_MC", ["All"], jetType="AK8PFPuppi")
+- 
