@@ -15,9 +15,11 @@ echo $WORKING_PATH
 
 # change the Jet collection to lepton-subtraction Jet collection
 mv $WORKING_PATH/analysis/others/*.patch $WORKING_PATH/modules/jme/
+cd $WORKING_PATH/modules/jme/
 patch -p0 jetmetUncertainties.py < AK4.patch
 patch -p0 fatJetUncertainties.py < AK8.patch
 patch -p0 jetmetHelperRun2.py < helper.patch
+cd -
 
 if [ "${year}" = "2016apv" ]; then
   echo "Initiating setup for 2016apv......";
