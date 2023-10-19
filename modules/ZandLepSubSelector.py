@@ -24,6 +24,8 @@ class ZandLepSubSelector(Module):
     self.out.branch("JetNoVlep_mass", "F", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_rawFactor", "F", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_area", "F", lenVar="nJetNoVlep")
+    self.out.branch("JetNoVlep_hadronFlavour", "F", lenVar="nJetNoVlep")
+    self.out.branch("JetNoVlep_partonFlavour", "F", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_id", "I", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_jetId", "I", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_muonIdx1", "I", lenVar="nJetNoVlep")
@@ -59,8 +61,18 @@ class ZandLepSubSelector(Module):
     self.out.branch("FatJetNoVlep_drl2", "F", lenVar="nFatJetNoVlep")
     self.out.branch("FatJetNoVlep_dRinit", "F", lenVar="nFatJetNoVlep")
     self.out.branch("FatJetNoVlep_bbvsccqq", "F", lenVar="nFatJetNoVlep")
-    self.out.branch("mu_channel", "B")
+    self.out.branch("mm_channel", "B")
+    self.out.branch("ee_channel", "B")
+    self.out.branch("em_channel", "B")
+    self.out.branch("lep_2G0F", "I")
+    self.out.branch("lep_1G1F", "I")
+    self.out.branch("lep_0G2F", "I")
+    self.out.branch("onee_channel", "B")
+    self.out.branch("onem_channel", "B")
+    self.out.branch("lep_1G", "I")
+    self.out.branch("l1_isfake", "I")
     self.out.branch("l1_pt", "F")
+    self.out.branch("l1_id", "I")
     self.out.branch("l1_rawpt", "F")
     self.out.branch("l1_eta", "F")
     self.out.branch("l1_phi", "F")
@@ -68,6 +80,7 @@ class ZandLepSubSelector(Module):
     self.out.branch("l1_rawmass", "F")
     self.out.branch("l1_relPtl2", "F")
     self.out.branch("l2_pt", "F")
+    self.out.branch("l2_id", "I")
     self.out.branch("l2_rawpt", "F")
     self.out.branch("l2_eta", "F")
     self.out.branch("l2_phi", "F")
@@ -81,6 +94,7 @@ class ZandLepSubSelector(Module):
     self.out.branch("zlep_eta", "F")
     self.out.branch("zlep_phi", "F")
     self.out.branch("zlep_mass", "F")
+    self.is_mc = bool(inputTree.GetBranch("GenJet_pt"))
 
   def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
     pass
@@ -89,19 +103,27 @@ class ZandLepSubSelector(Module):
 
     muons = Collection(event, 'Muon')
     goodmuons = Collection(event, 'GoodMuon')
+    fakemuons = Collection(event, 'FakeMuon')
     goodeles = Collection(event, 'GoodElectron')
+    fakeeles = Collection(event, 'FakeElectron')
   
     recojets = Collection(event, 'Jet')
     recosubjets = Collection(event, 'SubJet')
     recofatjets = Collection(event, 'FatJet')
 
-    mu_channel=False
+    mm_channel=False
+    ee_channel=False
+    em_channel=False
+    onee_channel=False
+    onem_channel=False
     JetNoVlep_pt=[]
     JetNoVlep_eta=[]
     JetNoVlep_phi=[]
     JetNoVlep_mass=[]
     JetNoVlep_rawFactor=[]
     JetNoVlep_area=[]
+    JetNoVlep_hadronFlavour=[]
+    JetNoVlep_partonFlavour=[]
     JetNoVlep_id=[]
     JetNoVlep_jetId=[]
     JetNoVlep_muonIdx1=[]
@@ -137,7 +159,13 @@ class ZandLepSubSelector(Module):
     FatJetNoVlep_drl2=[]
     FatJetNoVlep_dRinit=[]
     FatJetNoVlep_bbvsccqq=[]
+    lep_2G0F=-1
+    lep_1G1F=-1
+    lep_0G2F=-1
+    lep_1G=-1
+    l1_isfake=-1
     l1_pt=-99
+    l1_id=-99
     l1_rawpt=-99
     l1_eta=-99
     l1_phi=-99
@@ -145,6 +173,7 @@ class ZandLepSubSelector(Module):
     l1_rawmass=-99
     l1_relPtl2=-99
     l2_pt=-99
+    l2_id=-99
     l2_rawpt=-99
     l2_eta=-99
     l2_phi=-99
@@ -159,43 +188,272 @@ class ZandLepSubSelector(Module):
     zlep_phi=-99
     zlep_mass=-99
 
-    # only two tight leptons
-    if not (event.nGoodMuon+event.nGoodElectron)==2:return False
-    if not (event.nGoodMuon==2 or event.nGoodElectron==2):return False
+#    # only two tight leptons
+#    if not (event.nGoodMuon+event.nGoodElectron)==2:return False
+#    if not (event.nGoodMuon==2 or event.nGoodElectron==2):return False
+    if (event.nGoodMuon+event.nGoodElectron+event.nFakeMuon+event.nFakeElectron)==0:return False
 
     l1v4_tmp=TLorentzVector()
     l2v4_tmp=TLorentzVector()
     l1v4raw_tmp=TLorentzVector()
     l2v4raw_tmp=TLorentzVector()
+   
+    if (event.nGoodMuon+event.nGoodElectron+event.nFakeMuon+event.nFakeElectron)==1:
+      if event.nGoodMuon==1:
+        onem_channel=True
+        lep_1G=1
+        l1_pt=goodmuons[0].pt
+        l1_id=goodmuons[0].id
+        l1_rawpt=goodmuons[0].rawpt
+        l1_eta=goodmuons[0].eta
+        l1_phi=goodmuons[0].phi
+        l1_mass=goodmuons[0].mass
+        l1_rawmass=goodmuons[0].rawmass
+      elif event.nFakeMuon==1:
+        onem_channel=True
+        l1_pt=fakemuons[0].pt
+        l1_id=fakemuons[0].id
+        l1_rawpt=fakemuons[0].rawpt
+        l1_eta=fakemuons[0].eta
+        l1_phi=fakemuons[0].phi
+        l1_mass=fakemuons[0].mass
+        l1_rawmass=fakemuons[0].rawmass
+      elif event.nGoodElectron==1:
+        onee_channel=True
+        lep_1G=1
+        l1_pt=goodeles[0].pt
+        l1_id=goodeles[0].id
+        l1_rawpt=goodeles[0].rawpt
+        l1_eta=goodeles[0].eta
+        l1_phi=goodeles[0].phi
+        l1_mass=goodeles[0].mass
+        l1_rawmass=goodeles[0].rawmass
+      else:
+        onee_channel=True
+        l1_pt=fakeeles[0].pt
+        l1_id=fakeeles[0].id
+        l1_rawpt=fakeeles[0].rawpt
+        l1_eta=fakeeles[0].eta
+        l1_phi=fakeeles[0].phi
+        l1_mass=fakeeles[0].mass
+        l1_rawmass=fakeeles[0].rawmass
+ 
+    # in ele + mu case, let ele is always the leading lepton
+    elif (event.nGoodMuon+event.nGoodElectron+event.nFakeMuon+event.nFakeElectron)==2:
+      if event.nGoodMuon==2:
+        mm_channel=True
+        lep_2G0F=1
+        l1_pt=goodmuons[0].pt
+        l1_id=goodmuons[0].id
+        l1_rawpt=goodmuons[0].rawpt
+        l1_eta=goodmuons[0].eta
+        l1_phi=goodmuons[0].phi
+        l1_mass=goodmuons[0].mass
+        l1_rawmass=goodmuons[0].rawmass
+        l2_pt=goodmuons[1].pt
+        l2_id=goodmuons[1].id
+        l2_rawpt=goodmuons[1].rawpt
+        l2_eta=goodmuons[1].eta
+        l2_phi=goodmuons[1].phi
+        l2_mass=goodmuons[1].mass
+        l2_rawmass=goodmuons[1].rawmass
 
-    if event.nGoodMuon==2:
-      mu_channel=True
-      l1_pt=goodmuons[0].pt
-      l1_rawpt=goodmuons[0].rawpt
-      l1_eta=goodmuons[0].eta
-      l1_phi=goodmuons[0].phi
-      l1_mass=goodmuons[0].mass
-      l1_rawmass=goodmuons[0].rawmass
-      l2_pt=goodmuons[1].pt
-      l2_rawpt=goodmuons[1].rawpt
-      l2_eta=goodmuons[1].eta
-      l2_phi=goodmuons[1].phi
-      l2_mass=goodmuons[1].mass
-      l2_rawmass=goodmuons[1].rawmass
-    else:
-      mu_channel=False
-      l1_pt=goodeles[0].pt
-      l1_rawpt=goodeles[0].rawpt
-      l1_eta=goodeles[0].eta
-      l1_phi=goodeles[0].phi
-      l1_mass=goodeles[0].mass
-      l1_rawmass=goodeles[0].rawmass
-      l2_pt=goodeles[1].pt
-      l2_rawpt=goodeles[1].rawpt
-      l2_eta=goodeles[1].eta
-      l2_phi=goodeles[1].phi
-      l2_mass=goodeles[1].mass
-      l2_rawmass=goodeles[1].rawmass
+      elif event.nGoodMuon==1 and event.nGoodElectron==1:
+        em_channel=True
+        lep_2G0F=1
+        l1_pt=goodeles[0].pt
+        l1_id=goodeles[0].id
+        l1_rawpt=goodeles[0].rawpt
+        l1_eta=goodeles[0].eta
+        l1_phi=goodeles[0].phi
+        l1_mass=goodeles[0].mass
+        l1_rawmass=goodeles[0].rawmass
+        l2_pt=goodmuons[0].pt
+        l2_id=goodmuons[0].id
+        l2_rawpt=goodmuons[0].rawpt
+        l2_eta=goodmuons[0].eta
+        l2_phi=goodmuons[0].phi
+        l2_mass=goodmuons[0].mass
+        l2_rawmass=goodmuons[0].rawmass
+
+      elif event.nGoodMuon==1 and event.nFakeMuon==1:
+        mm_channel=True
+        lep_1G1F=1
+        if goodmuons[0].pt>fakemuons[0].pt:
+          l1_pt=goodmuons[0].pt
+          l1_id=goodmuons[0].id
+          l1_rawpt=goodmuons[0].rawpt
+          l1_eta=goodmuons[0].eta
+          l1_phi=goodmuons[0].phi
+          l1_mass=goodmuons[0].mass
+          l1_rawmass=goodmuons[0].rawmass
+          l2_pt=fakemuons[0].pt
+          l2_id=fakemuons[0].id
+          l2_rawpt=fakemuons[0].rawpt
+          l2_eta=fakemuons[0].eta
+          l2_phi=fakemuons[0].phi
+          l2_mass=fakemuons[0].mass
+          l2_rawmass=fakemuons[0].rawmass
+        else:
+          l1_isfake=1
+          l1_pt=fakemuons[0].pt
+          l1_id=fakemuons[0].id
+          l1_rawpt=fakemuons[0].rawpt
+          l1_eta=fakemuons[0].eta
+          l1_phi=fakemuons[0].phi
+          l1_mass=fakemuons[0].mass
+          l1_rawmass=fakemuons[0].rawmass
+          l2_pt=goodmuons[0].pt
+          l2_id=goodmuons[0].id
+          l2_rawpt=goodmuons[0].rawpt
+          l2_eta=goodmuons[0].eta
+          l2_phi=goodmuons[0].phi
+          l2_mass=goodmuons[0].mass
+          l2_rawmass=goodmuons[0].rawmass
+
+      elif event.nGoodMuon==1 and event.nFakeElectron==1:
+	l1_isfake=1
+        em_channel=True
+        lep_1G1F=1
+        l1_pt=fakeeles[0].pt
+        l1_id=fakeeles[0].id
+        l1_rawpt=fakeeles[0].rawpt
+        l1_eta=fakeeles[0].eta
+        l1_phi=fakeeles[0].phi
+        l1_mass=fakeeles[0].mass
+        l1_rawmass=fakeeles[0].rawmass
+        l2_pt=goodmuons[0].pt
+        l2_id=goodmuons[0].id
+        l2_rawpt=goodmuons[0].rawpt
+        l2_eta=goodmuons[0].eta
+        l2_phi=goodmuons[0].phi
+        l2_mass=goodmuons[0].mass
+        l2_rawmass=goodmuons[0].rawmass
+
+      elif event.nGoodElectron==2:
+        ee_channel=True
+        lep_2G0F=1
+        l1_pt=goodeles[0].pt
+        l1_id=goodeles[0].id
+        l1_rawpt=goodeles[0].rawpt
+        l1_eta=goodeles[0].eta
+        l1_phi=goodeles[0].phi
+        l1_mass=goodeles[0].mass
+        l1_rawmass=goodeles[0].rawmass
+        l2_pt=goodeles[1].pt
+        l2_id=goodeles[1].id
+        l2_rawpt=goodeles[1].rawpt
+        l2_eta=goodeles[1].eta
+        l2_phi=goodeles[1].phi
+        l2_mass=goodeles[1].mass
+        l2_rawmass=goodeles[1].rawmass
+
+      elif event.nGoodElectron==1 and event.nFakeMuon==1:
+        em_channel=True
+        lep_1G1F=1
+        l1_pt=goodeles[0].pt
+        l1_id=goodeles[0].id
+        l1_rawpt=goodeles[0].rawpt
+        l1_eta=goodeles[0].eta
+        l1_phi=goodeles[0].phi
+        l1_mass=goodeles[0].mass
+        l1_rawmass=goodeles[0].rawmass
+        l2_pt=fakemuons[0].pt
+        l2_id=fakemuons[0].id
+        l2_rawpt=fakemuons[0].rawpt
+        l2_eta=fakemuons[0].eta
+        l2_phi=fakemuons[0].phi
+        l2_mass=fakemuons[0].mass
+        l2_rawmass=fakemuons[0].rawmass
+
+      elif event.nGoodElectron==1 and event.nFakeElectron==1:
+        ee_channel=True
+        lep_1G1F=1
+        if goodeles[0].pt>fakeeles[0].pt:
+          l1_pt=goodeles[0].pt
+          l1_id=goodeles[0].id
+          l1_rawpt=goodeles[0].rawpt
+          l1_eta=goodeles[0].eta
+          l1_phi=goodeles[0].phi
+          l1_mass=goodeles[0].mass
+          l1_rawmass=goodeles[0].rawmass
+          l2_pt=fakeeles[0].pt
+          l2_id=fakeeles[0].id
+          l2_rawpt=fakeeles[0].rawpt
+          l2_eta=fakeeles[0].eta
+          l2_phi=fakeeles[0].phi
+          l2_mass=fakeeles[0].mass
+          l2_rawmass=fakeeles[0].rawmass
+        else:
+          l1_isfake=1
+          l1_pt=fakeeles[0].pt
+          l1_id=fakeeles[0].id
+          l1_rawpt=fakeeles[0].rawpt
+          l1_eta=fakeeles[0].eta
+          l1_phi=fakeeles[0].phi
+          l1_mass=fakeeles[0].mass
+          l1_rawmass=fakeeles[0].rawmass
+          l2_pt=goodeles[0].pt
+          l2_id=goodeles[0].id
+          l2_rawpt=goodeles[0].rawpt
+          l2_eta=goodeles[0].eta
+          l2_phi=goodeles[0].phi
+          l2_mass=goodeles[0].mass
+          l2_rawmass=goodeles[0].rawmass
+
+      elif event.nFakeMuon==2:
+        mm_channel=True
+        lep_0G2F=1
+        l1_pt=fakemuons[0].pt
+        l1_id=fakemuons[0].id
+        l1_rawpt=fakemuons[0].rawpt
+        l1_eta=fakemuons[0].eta
+        l1_phi=fakemuons[0].phi
+        l1_mass=fakemuons[0].mass
+        l1_rawmass=fakemuons[0].rawmass
+        l2_pt=fakemuons[1].pt
+        l2_id=fakemuons[1].id
+        l2_rawpt=fakemuons[1].rawpt
+        l2_eta=fakemuons[1].eta
+        l2_phi=fakemuons[1].phi
+        l2_mass=fakemuons[1].mass
+        l2_rawmass=fakemuons[1].rawmass
+
+      elif event.nFakeMuon==1 and event.nFakeElectron==1:
+        em_channel=True
+        lep_0G2F=1
+        l1_pt=fakeeles[0].pt
+        l1_id=fakeeles[0].id
+        l1_rawpt=fakeeles[0].rawpt
+        l1_eta=fakeeles[0].eta
+        l1_phi=fakeeles[0].phi
+        l1_mass=fakeeles[0].mass
+        l1_rawmass=fakeeles[0].rawmass
+        l2_pt=fakemuons[0].pt
+        l2_id=fakemuons[0].id
+        l2_rawpt=fakemuons[0].rawpt
+        l2_eta=fakemuons[0].eta
+        l2_phi=fakemuons[0].phi
+        l2_mass=fakemuons[0].mass
+        l2_rawmass=fakemuons[0].rawmass
+
+      else:
+        ee_channel=True
+        lep_0G2F=1
+        l1_pt=fakeeles[0].pt
+        l1_id=fakeeles[0].id
+        l1_rawpt=fakeeles[0].rawpt
+        l1_eta=fakeeles[0].eta
+        l1_phi=fakeeles[0].phi
+        l1_mass=fakeeles[0].mass
+        l1_rawmass=fakeeles[0].rawmass
+        l2_pt=fakeeles[1].pt
+        l2_id=fakeeles[1].id
+        l2_rawpt=fakeeles[1].rawpt
+        l2_eta=fakeeles[1].eta
+        l2_phi=fakeeles[1].phi
+        l2_mass=fakeeles[1].mass
+        l2_rawmass=fakeeles[1].rawmass
 
     l1v4_tmp.SetPtEtaPhiM(l1_pt,l1_eta,l1_phi,l1_mass)
     l2v4_tmp.SetPtEtaPhiM(l2_pt,l2_eta,l2_phi,l2_mass)
@@ -221,6 +479,12 @@ class ZandLepSubSelector(Module):
       neEmEF_total=[]
       rawenergy_total=[]
       for ij in range(0,event.nJet):
+        if self.is_mc:
+          JetNoVlep_hadronFlavour.append(recojets[ij].hadronFlavour)
+          JetNoVlep_partonFlavour.append(recojets[ij].partonFlavour)
+        else:
+          JetNoVlep_hadronFlavour.append(-99)
+          JetNoVlep_partonFlavour.append(-99)
         JetNoVlep_area.append(recojets[ij].area)
         JetNoVlep_jetId.append(recojets[ij].jetId)
         jetv4_tmp=TLorentzVector()
@@ -244,8 +508,12 @@ class ZandLepSubSelector(Module):
           for imu in range(0,event.nMuon):
             muv4_tmp.SetPtEtaPhiM(event.Muon_pt[imu],event.Muon_eta[imu],event.Muon_phi[imu],event.Muon_mass[imu])
             if jetv4_tmp.DeltaR(muv4_tmp)<0.4:
-              if mu_channel:
-                if not (imu==event.GoodMuon_id[0] or imu==event.GoodMuon_id[1]):
+              if mm_channel:
+                if not (imu==l1_id or imu==l2_id):
+                  if jetmatched_mu1<0:jetmatched_mu1=imu
+                  elif jetmatched_mu2<0:jetmatched_mu2=imu
+              elif em_channel:
+                if not (imu==l2_id):
                   if jetmatched_mu1<0:jetmatched_mu1=imu
                   elif jetmatched_mu2<0:jetmatched_mu2=imu
               else:
@@ -320,7 +588,7 @@ class ZandLepSubSelector(Module):
         JetNoVlep_muonSubtrFactor.append(1. - ak4_tmp_v4_.Pt()/ak4jet_arr_[ij].Pt())
 
 
-    JetNoVlep_array = sorted(zip(JetNoVlep_pt,JetNoVlep_eta,JetNoVlep_phi,JetNoVlep_mass,JetNoVlep_rawFactor,JetNoVlep_id,JetNoVlep_area,JetNoVlep_jetId,JetNoVlep_muonIdx1,JetNoVlep_muonIdx2,JetNoVlep_muonSubtrFactor,JetNoVlep_neEmEF,JetNoVlep_chEmEF,JetNoVlep_drl1,JetNoVlep_drl2,JetNoVlep_dRinit), key=lambda x: x[0], reverse=True)
+    JetNoVlep_array = sorted(zip(JetNoVlep_pt,JetNoVlep_eta,JetNoVlep_phi,JetNoVlep_mass,JetNoVlep_rawFactor,JetNoVlep_id,JetNoVlep_area,JetNoVlep_jetId,JetNoVlep_muonIdx1,JetNoVlep_muonIdx2,JetNoVlep_muonSubtrFactor,JetNoVlep_neEmEF,JetNoVlep_chEmEF,JetNoVlep_drl1,JetNoVlep_drl2,JetNoVlep_dRinit,JetNoVlep_hadronFlavour,JetNoVlep_partonFlavour), key=lambda x: x[0], reverse=True)
     JetNoVlep_pt=[x[0] for x in JetNoVlep_array]
     JetNoVlep_eta=[x[1] for x in JetNoVlep_array]
     JetNoVlep_phi=[x[2] for x in JetNoVlep_array]
@@ -337,6 +605,8 @@ class ZandLepSubSelector(Module):
     JetNoVlep_drl1=[x[13] for x in JetNoVlep_array]
     JetNoVlep_drl2=[x[14] for x in JetNoVlep_array]
     JetNoVlep_dRinit=[x[15] for x in JetNoVlep_array]
+    JetNoVlep_hadronFlavour=[x[16] for x in JetNoVlep_array]
+    JetNoVlep_partonFlavour=[x[17] for x in JetNoVlep_array]
 
 
     # re-calculate fatjet information after leptons subtraction
@@ -576,6 +846,8 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("JetNoVlep_mass", JetNoVlep_mass)
     self.out.fillBranch("JetNoVlep_rawFactor", JetNoVlep_rawFactor)
     self.out.fillBranch("JetNoVlep_area", JetNoVlep_area)
+    self.out.fillBranch("JetNoVlep_hadronFlavour", JetNoVlep_hadronFlavour)
+    self.out.fillBranch("JetNoVlep_partonFlavour", JetNoVlep_partonFlavour)
     self.out.fillBranch("JetNoVlep_id", JetNoVlep_id)
     self.out.fillBranch("JetNoVlep_jetId", JetNoVlep_jetId)
     self.out.fillBranch("JetNoVlep_muonIdx1", JetNoVlep_muonIdx1)
@@ -611,8 +883,18 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("FatJetNoVlep_drl2", FatJetNoVlep_drl2)
     self.out.fillBranch("FatJetNoVlep_dRinit", FatJetNoVlep_dRinit)
     self.out.fillBranch("FatJetNoVlep_bbvsccqq", FatJetNoVlep_bbvsccqq)
-    self.out.fillBranch("mu_channel", mu_channel)
+    self.out.fillBranch("mm_channel", mm_channel)
+    self.out.fillBranch("ee_channel", ee_channel)
+    self.out.fillBranch("em_channel", em_channel)
+    self.out.fillBranch("lep_2G0F", lep_2G0F)
+    self.out.fillBranch("lep_1G1F", lep_1G1F)
+    self.out.fillBranch("lep_0G2F", lep_0G2F)
+    self.out.fillBranch("onee_channel", onee_channel)
+    self.out.fillBranch("onem_channel", onem_channel)
+    self.out.fillBranch("lep_1G", lep_1G)
+    self.out.fillBranch("l1_isfake", l1_isfake)
     self.out.fillBranch("l1_pt", l1_pt)
+    self.out.fillBranch("l1_id", l1_id)
     self.out.fillBranch("l1_rawpt", l1_rawpt)
     self.out.fillBranch("l1_eta", l1_eta)
     self.out.fillBranch("l1_phi", l1_phi)
@@ -620,6 +902,7 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("l1_rawmass", l1_rawmass)
     self.out.fillBranch("l1_relPtl2", l1_relPtl2)
     self.out.fillBranch("l2_pt", l2_pt)
+    self.out.fillBranch("l2_id", l2_id)
     self.out.fillBranch("l2_rawpt", l2_rawpt)
     self.out.fillBranch("l2_eta", l2_eta)
     self.out.fillBranch("l2_phi", l2_phi)

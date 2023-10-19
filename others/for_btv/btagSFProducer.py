@@ -36,7 +36,7 @@ class btagSFProducer(Module):
     """
 
     def __init__(
-            self, era, algo='deepjet', selectedWPs=['M', 'shape_corr'],
+            self, era, algo='deepjet', selectedWPs=['L','M'],
             sfFileName=None, verbose=0, jesSystsForShape=["jes"]
     ):
         self.era = era
@@ -123,7 +123,7 @@ class btagSFProducer(Module):
             },
             'deepjet': {
                 'UL2016apv': {
-                    'inputFileName': "DeepJet_106XUL16preVFPSF_v2_skimmed.csv",
+                    'inputFileName': "wp_deepJet_UL16preVFP.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -132,7 +132,7 @@ class btagSFProducer(Module):
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
                 'UL2016': {
-                    'inputFileName': "DeepJet_106XUL16postVFPSF_v3_skimmed.csv",
+                    'inputFileName': "wp_deepJet_UL16postVFP.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -159,7 +159,7 @@ class btagSFProducer(Module):
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
                 'UL2017': {
-                    'inputFileName': "DeepJet_106XUL17SF_V2p1.csv",
+                    'inputFileName': "wp_deepJet_UL17.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -177,7 +177,7 @@ class btagSFProducer(Module):
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
                 'UL2018': {
-                    'inputFileName': "DeepCSV_106XUL18SF_V1p1.csv",
+                    'inputFileName': "wp_deepJet_UL18.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c

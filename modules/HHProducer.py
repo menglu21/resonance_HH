@@ -116,6 +116,7 @@ class HHProducer(Module):
 
     self.is_mc = bool(inputTree.GetBranch("GenJet_pt"))
     self.is_lhe = bool(inputTree.GetBranch("nLHEPart"))
+    self.is_sig = bool(inputTree.GetBranch("GEN_y_pt"))
 
   def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
     pass
@@ -124,7 +125,7 @@ class HHProducer(Module):
     
     # PV selection
     if (event.PV_npvsGood<1): return False
-    if abs(event.GEN_zj1_pdgid)==5: return False
+    if self.is_sig and abs(event.GEN_zj1_pdgid)==5: return False
 
     # trigger selection
     # special action for 2017 single ele HLT, https://twiki.cern.ch/twiki/bin/viewauth/CMS/Egamma2017DataRecommendations#Single_Electron_Triggers
