@@ -64,6 +64,7 @@ class ZandLepSubSelector(Module):
     self.out.branch("mm_channel", "B")
     self.out.branch("ee_channel", "B")
     self.out.branch("em_channel", "B")
+    self.out.branch("IsSS", "B")
     self.out.branch("lep_2G0F", "I")
     self.out.branch("lep_1G1F", "I")
     self.out.branch("lep_0G2F", "I")
@@ -73,6 +74,7 @@ class ZandLepSubSelector(Module):
     self.out.branch("l1_isfake", "I")
     self.out.branch("l1_pt", "F")
     self.out.branch("l1_id", "I")
+    self.out.branch("l1_pdgid", "I")
     self.out.branch("l1_rawpt", "F")
     self.out.branch("l1_eta", "F")
     self.out.branch("l1_phi", "F")
@@ -81,6 +83,7 @@ class ZandLepSubSelector(Module):
     self.out.branch("l1_relPtl2", "F")
     self.out.branch("l2_pt", "F")
     self.out.branch("l2_id", "I")
+    self.out.branch("l2_pdgid", "I")
     self.out.branch("l2_rawpt", "F")
     self.out.branch("l2_eta", "F")
     self.out.branch("l2_phi", "F")
@@ -116,6 +119,7 @@ class ZandLepSubSelector(Module):
     em_channel=False
     onee_channel=False
     onem_channel=False
+    IsSS=False
     JetNoVlep_pt=[]
     JetNoVlep_eta=[]
     JetNoVlep_phi=[]
@@ -166,6 +170,7 @@ class ZandLepSubSelector(Module):
     l1_isfake=-1
     l1_pt=-99
     l1_id=-99
+    l1_pdgid=-99
     l1_rawpt=-99
     l1_eta=-99
     l1_phi=-99
@@ -174,6 +179,7 @@ class ZandLepSubSelector(Module):
     l1_relPtl2=-99
     l2_pt=-99
     l2_id=-99
+    l2_pdgid=-99
     l2_rawpt=-99
     l2_eta=-99
     l2_phi=-99
@@ -204,6 +210,7 @@ class ZandLepSubSelector(Module):
         lep_1G=1
         l1_pt=goodmuons[0].pt
         l1_id=goodmuons[0].id
+        l1_pdgid=goodmuons[0].pdgid
         l1_rawpt=goodmuons[0].rawpt
         l1_eta=goodmuons[0].eta
         l1_phi=goodmuons[0].phi
@@ -213,6 +220,7 @@ class ZandLepSubSelector(Module):
         onem_channel=True
         l1_pt=fakemuons[0].pt
         l1_id=fakemuons[0].id
+        l1_pdgid=fakemuons[0].pdgid
         l1_rawpt=fakemuons[0].rawpt
         l1_eta=fakemuons[0].eta
         l1_phi=fakemuons[0].phi
@@ -223,6 +231,7 @@ class ZandLepSubSelector(Module):
         lep_1G=1
         l1_pt=goodeles[0].pt
         l1_id=goodeles[0].id
+        l1_pdgid=goodeles[0].pdgid
         l1_rawpt=goodeles[0].rawpt
         l1_eta=goodeles[0].eta
         l1_phi=goodeles[0].phi
@@ -232,6 +241,7 @@ class ZandLepSubSelector(Module):
         onee_channel=True
         l1_pt=fakeeles[0].pt
         l1_id=fakeeles[0].id
+        l1_pdgid=fakeeles[0].pdgid
         l1_rawpt=fakeeles[0].rawpt
         l1_eta=fakeeles[0].eta
         l1_phi=fakeeles[0].phi
@@ -245,6 +255,7 @@ class ZandLepSubSelector(Module):
         lep_2G0F=1
         l1_pt=goodmuons[0].pt
         l1_id=goodmuons[0].id
+        l1_pdgid=goodmuons[0].pdgid
         l1_rawpt=goodmuons[0].rawpt
         l1_eta=goodmuons[0].eta
         l1_phi=goodmuons[0].phi
@@ -252,6 +263,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=goodmuons[0].rawmass
         l2_pt=goodmuons[1].pt
         l2_id=goodmuons[1].id
+        l2_pdgid=goodmuons[1].pdgid
         l2_rawpt=goodmuons[1].rawpt
         l2_eta=goodmuons[1].eta
         l2_phi=goodmuons[1].phi
@@ -262,7 +274,7 @@ class ZandLepSubSelector(Module):
         em_channel=True
         lep_2G0F=1
         l1_pt=goodeles[0].pt
-        l1_id=goodeles[0].id
+        l1_pdgid=goodeles[0].pdgid
         l1_rawpt=goodeles[0].rawpt
         l1_eta=goodeles[0].eta
         l1_phi=goodeles[0].phi
@@ -270,6 +282,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=goodeles[0].rawmass
         l2_pt=goodmuons[0].pt
         l2_id=goodmuons[0].id
+        l2_pdgid=goodmuons[0].pdgid
         l2_rawpt=goodmuons[0].rawpt
         l2_eta=goodmuons[0].eta
         l2_phi=goodmuons[0].phi
@@ -282,6 +295,7 @@ class ZandLepSubSelector(Module):
         if goodmuons[0].pt>fakemuons[0].pt:
           l1_pt=goodmuons[0].pt
           l1_id=goodmuons[0].id
+          l1_pdgid=goodmuons[0].pdgid
           l1_rawpt=goodmuons[0].rawpt
           l1_eta=goodmuons[0].eta
           l1_phi=goodmuons[0].phi
@@ -289,6 +303,7 @@ class ZandLepSubSelector(Module):
           l1_rawmass=goodmuons[0].rawmass
           l2_pt=fakemuons[0].pt
           l2_id=fakemuons[0].id
+          l2_pdgid=fakemuons[0].pdgid
           l2_rawpt=fakemuons[0].rawpt
           l2_eta=fakemuons[0].eta
           l2_phi=fakemuons[0].phi
@@ -297,7 +312,7 @@ class ZandLepSubSelector(Module):
         else:
           l1_isfake=1
           l1_pt=fakemuons[0].pt
-          l1_id=fakemuons[0].id
+          l1_pdgid=fakemuons[0].pdgid
           l1_rawpt=fakemuons[0].rawpt
           l1_eta=fakemuons[0].eta
           l1_phi=fakemuons[0].phi
@@ -305,6 +320,7 @@ class ZandLepSubSelector(Module):
           l1_rawmass=fakemuons[0].rawmass
           l2_pt=goodmuons[0].pt
           l2_id=goodmuons[0].id
+          l2_pdgid=goodmuons[0].pdgid
           l2_rawpt=goodmuons[0].rawpt
           l2_eta=goodmuons[0].eta
           l2_phi=goodmuons[0].phi
@@ -316,7 +332,7 @@ class ZandLepSubSelector(Module):
         em_channel=True
         lep_1G1F=1
         l1_pt=fakeeles[0].pt
-        l1_id=fakeeles[0].id
+        l1_pdgid=fakeeles[0].pdgid
         l1_rawpt=fakeeles[0].rawpt
         l1_eta=fakeeles[0].eta
         l1_phi=fakeeles[0].phi
@@ -324,6 +340,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=fakeeles[0].rawmass
         l2_pt=goodmuons[0].pt
         l2_id=goodmuons[0].id
+        l2_pdgid=goodmuons[0].pdgid
         l2_rawpt=goodmuons[0].rawpt
         l2_eta=goodmuons[0].eta
         l2_phi=goodmuons[0].phi
@@ -334,7 +351,7 @@ class ZandLepSubSelector(Module):
         ee_channel=True
         lep_2G0F=1
         l1_pt=goodeles[0].pt
-        l1_id=goodeles[0].id
+        l1_pdgid=goodeles[0].pdgid
         l1_rawpt=goodeles[0].rawpt
         l1_eta=goodeles[0].eta
         l1_phi=goodeles[0].phi
@@ -342,6 +359,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=goodeles[0].rawmass
         l2_pt=goodeles[1].pt
         l2_id=goodeles[1].id
+        l2_pdgid=goodeles[1].pdgid
         l2_rawpt=goodeles[1].rawpt
         l2_eta=goodeles[1].eta
         l2_phi=goodeles[1].phi
@@ -353,6 +371,7 @@ class ZandLepSubSelector(Module):
         lep_1G1F=1
         l1_pt=goodeles[0].pt
         l1_id=goodeles[0].id
+        l1_pdgid=goodeles[0].pdgid
         l1_rawpt=goodeles[0].rawpt
         l1_eta=goodeles[0].eta
         l1_phi=goodeles[0].phi
@@ -360,6 +379,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=goodeles[0].rawmass
         l2_pt=fakemuons[0].pt
         l2_id=fakemuons[0].id
+        l2_pdgid=fakemuons[0].pdgid
         l2_rawpt=fakemuons[0].rawpt
         l2_eta=fakemuons[0].eta
         l2_phi=fakemuons[0].phi
@@ -372,6 +392,7 @@ class ZandLepSubSelector(Module):
         if goodeles[0].pt>fakeeles[0].pt:
           l1_pt=goodeles[0].pt
           l1_id=goodeles[0].id
+          l1_pdgid=goodeles[0].pdgid
           l1_rawpt=goodeles[0].rawpt
           l1_eta=goodeles[0].eta
           l1_phi=goodeles[0].phi
@@ -379,6 +400,7 @@ class ZandLepSubSelector(Module):
           l1_rawmass=goodeles[0].rawmass
           l2_pt=fakeeles[0].pt
           l2_id=fakeeles[0].id
+          l2_pdgid=fakeeles[0].pdgid
           l2_rawpt=fakeeles[0].rawpt
           l2_eta=fakeeles[0].eta
           l2_phi=fakeeles[0].phi
@@ -388,6 +410,7 @@ class ZandLepSubSelector(Module):
           l1_isfake=1
           l1_pt=fakeeles[0].pt
           l1_id=fakeeles[0].id
+          l1_pdgid=fakeeles[0].pdgid
           l1_rawpt=fakeeles[0].rawpt
           l1_eta=fakeeles[0].eta
           l1_phi=fakeeles[0].phi
@@ -395,6 +418,7 @@ class ZandLepSubSelector(Module):
           l1_rawmass=fakeeles[0].rawmass
           l2_pt=goodeles[0].pt
           l2_id=goodeles[0].id
+          l2_pdgid=goodeles[0].pdgid
           l2_rawpt=goodeles[0].rawpt
           l2_eta=goodeles[0].eta
           l2_phi=goodeles[0].phi
@@ -406,6 +430,7 @@ class ZandLepSubSelector(Module):
         lep_0G2F=1
         l1_pt=fakemuons[0].pt
         l1_id=fakemuons[0].id
+        l1_pdgid=fakemuons[0].pdgid
         l1_rawpt=fakemuons[0].rawpt
         l1_eta=fakemuons[0].eta
         l1_phi=fakemuons[0].phi
@@ -413,6 +438,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=fakemuons[0].rawmass
         l2_pt=fakemuons[1].pt
         l2_id=fakemuons[1].id
+        l2_pdgid=fakemuons[1].pdgid
         l2_rawpt=fakemuons[1].rawpt
         l2_eta=fakemuons[1].eta
         l2_phi=fakemuons[1].phi
@@ -424,6 +450,7 @@ class ZandLepSubSelector(Module):
         lep_0G2F=1
         l1_pt=fakeeles[0].pt
         l1_id=fakeeles[0].id
+        l1_pdgid=fakeeles[0].pdgid
         l1_rawpt=fakeeles[0].rawpt
         l1_eta=fakeeles[0].eta
         l1_phi=fakeeles[0].phi
@@ -431,6 +458,7 @@ class ZandLepSubSelector(Module):
         l1_rawmass=fakeeles[0].rawmass
         l2_pt=fakemuons[0].pt
         l2_id=fakemuons[0].id
+        l2_pdgid=fakemuons[0].pdgid
         l2_rawpt=fakemuons[0].rawpt
         l2_eta=fakemuons[0].eta
         l2_phi=fakemuons[0].phi
@@ -442,6 +470,7 @@ class ZandLepSubSelector(Module):
         lep_0G2F=1
         l1_pt=fakeeles[0].pt
         l1_id=fakeeles[0].id
+        l1_pdgid=fakeeles[0].pdgid
         l1_rawpt=fakeeles[0].rawpt
         l1_eta=fakeeles[0].eta
         l1_phi=fakeeles[0].phi
@@ -449,11 +478,14 @@ class ZandLepSubSelector(Module):
         l1_rawmass=fakeeles[0].rawmass
         l2_pt=fakeeles[1].pt
         l2_id=fakeeles[1].id
+        l2_pdgid=fakeeles[1].pdgid
         l2_rawpt=fakeeles[1].rawpt
         l2_eta=fakeeles[1].eta
         l2_phi=fakeeles[1].phi
         l2_mass=fakeeles[1].mass
         l2_rawmass=fakeeles[1].rawmass
+
+      if l1_pdgid*l2_pdgid>0:IsSS=True
 
     l1v4_tmp.SetPtEtaPhiM(l1_pt,l1_eta,l1_phi,l1_mass)
     l2v4_tmp.SetPtEtaPhiM(l2_pt,l2_eta,l2_phi,l2_mass)
@@ -891,10 +923,12 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("lep_0G2F", lep_0G2F)
     self.out.fillBranch("onee_channel", onee_channel)
     self.out.fillBranch("onem_channel", onem_channel)
+    self.out.fillBranch("IsSS", IsSS)
     self.out.fillBranch("lep_1G", lep_1G)
     self.out.fillBranch("l1_isfake", l1_isfake)
     self.out.fillBranch("l1_pt", l1_pt)
     self.out.fillBranch("l1_id", l1_id)
+    self.out.fillBranch("l1_pdgid", l1_pdgid)
     self.out.fillBranch("l1_rawpt", l1_rawpt)
     self.out.fillBranch("l1_eta", l1_eta)
     self.out.fillBranch("l1_phi", l1_phi)
@@ -903,6 +937,7 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("l1_relPtl2", l1_relPtl2)
     self.out.fillBranch("l2_pt", l2_pt)
     self.out.fillBranch("l2_id", l2_id)
+    self.out.fillBranch("l2_pdgid", l2_pdgid)
     self.out.fillBranch("l2_rawpt", l2_rawpt)
     self.out.fillBranch("l2_eta", l2_eta)
     self.out.fillBranch("l2_phi", l2_phi)

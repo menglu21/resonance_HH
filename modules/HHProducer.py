@@ -63,29 +63,45 @@ class HHProducer(Module):
     self.out.branch("Z_AK8Jet_drl1", "F")
     self.out.branch("Z_AK8Jet_drl2", "F")
 
-    self.out.branch("n_bjet_DeepB_M", "I")
-    self.out.branch("n_bjet_DeepB_L", "I")
-    self.out.branch("n_tight_nob", "I")
-    self.out.branch("HT", "F")
     self.out.branch("TightAK4JetCRall_id","I",lenVar="nTightAK4JetCRall")
-    self.out.branch("TightAK4JetCRall_b_DeepCSVloose_id","I",lenVar="nTightAK4JetCRall")
-    self.out.branch("TT_region","B")
-    self.out.branch("TT_region_withMbb","B")
-    self.out.branch("TT_b1_pt","F")
-    self.out.branch("TT_b1_eta","F")
-    self.out.branch("TT_b1_phi","F")
-    self.out.branch("TT_b1_mass","F")
-    self.out.branch("TT_b2_pt","F")
-    self.out.branch("TT_b2_eta","F")
-    self.out.branch("TT_b2_phi","F")
-    self.out.branch("TT_b2_mass","F")
-    self.out.branch("TT_mbb","F")
-    self.out.branch("TT_b1_drl1","F")
-    self.out.branch("TT_b1_drl2","F")
-    self.out.branch("TT_b2_drl1","F")
-    self.out.branch("TT_b2_drl2","F")
-    self.out.branch("DY_region_nob","B")
-    self.out.branch("DY_region_b","B")
+    self.out.branch("TightAK4JetCRall_b_DeepJetL_id","I",lenVar="nTightAK4JetCRall")
+    self.out.branch("TightAK4JetCRall_b_DeepJetM_id","I",lenVar="nTightAK4JetCRall")
+    self.out.branch("nTightAK4JetCRall_b_DeepJetL","I")
+    self.out.branch("nTightAK4JetCRall_b_DeepJetM","I")
+
+    self.out.branch("TT_region_Lbb","B")
+    self.out.branch("TT_Lb1_pt","F")
+    self.out.branch("TT_Lb1_eta","F")
+    self.out.branch("TT_Lb1_phi","F")
+    self.out.branch("TT_Lb1_mass","F")
+    self.out.branch("TT_Lb2_pt","F")
+    self.out.branch("TT_Lb2_eta","F")
+    self.out.branch("TT_Lb2_phi","F")
+    self.out.branch("TT_Lb2_mass","F")
+    self.out.branch("TT_Lmbb","F")
+    self.out.branch("TT_Lb1_drl1","F")
+    self.out.branch("TT_Lb1_drl2","F")
+    self.out.branch("TT_Lb2_drl1","F")
+    self.out.branch("TT_Lb2_drl2","F")
+
+    self.out.branch("TT_region_Mbb","B")
+    self.out.branch("TT_Mb1_pt","F")
+    self.out.branch("TT_Mb1_eta","F")
+    self.out.branch("TT_Mb1_phi","F")
+    self.out.branch("TT_Mb1_mass","F")
+    self.out.branch("TT_Mb2_pt","F")
+    self.out.branch("TT_Mb2_eta","F")
+    self.out.branch("TT_Mb2_phi","F")
+    self.out.branch("TT_Mb2_mass","F")
+    self.out.branch("TT_Mmbb","F")
+    self.out.branch("TT_Mb1_drl1","F")
+    self.out.branch("TT_Mb1_drl2","F")
+    self.out.branch("TT_Mb2_drl1","F")
+    self.out.branch("TT_Mb2_drl2","F")
+
+    self.out.branch("DY2J_region","B")
+    self.out.branch("DY2J_region_nob","B")
+
     self.out.branch("DY_j1_pt","F")
     self.out.branch("DY_j1_eta","F")
     self.out.branch("DY_j1_phi","F")
@@ -99,17 +115,23 @@ class HHProducer(Module):
     self.out.branch("DY_j1_drl2","F")
     self.out.branch("DY_j2_drl1","F")
     self.out.branch("DY_j2_drl2","F")
+
     self.out.branch("TightAK4Jet_pt","F",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_eta","F",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_phi","F",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_mass","F",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_id","I",lenVar="nTightAK4Jet")
+    self.out.branch("TightAK4Jet_initid","I",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_nob_id","I",lenVar="nTightAK4Jet")
-    self.out.branch("TightAK4Jet_b_DeepCSVmedium_id","I",lenVar="nTightAK4Jet")
-    self.out.branch("TightAK4Jet_b_DeepCSVloose_id","I",lenVar="nTightAK4Jet")
+    self.out.branch("TightAK4Jet_b_DeepJetM_id","I",lenVar="nTightAK4Jet")
+    self.out.branch("TightAK4Jet_b_DeepJetL_id","I",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_drl1","F",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_drl2","F",lenVar="nTightAK4Jet")
     self.out.branch("TightAK4Jet_dRinit","F",lenVar="nTightAK4Jet")
+    self.out.branch("n_bjet_DeepB_M", "I")
+    self.out.branch("n_bjet_DeepB_L", "I")
+    self.out.branch("n_tight_nob", "I")
+    self.out.branch("HT", "F")
     self.out.branch("Had_tau_id","I",lenVar="nTau")
 
     self.out.branch("h_j1_pt", "F")
@@ -147,26 +169,28 @@ class HHProducer(Module):
     self.out.branch("zhad_zlep_mass", "F",lenVar="nzhad")
 
     # For H/Y 4 momentum, in 2F0R case and ZF2R(Z-fatjet and 2 bjets from Higgs), H/Y 4-p can be determined directly. In HF2R case and 0F4R case, H/Y 4-p depends on the choise of two jets from Z boson
-    self.out.branch("HY_2F0R_pt", "F")
-    self.out.branch("HY_2F0R_eta", "F")
-    self.out.branch("HY_2F0R_phi", "F")
-    self.out.branch("HY_2F0R_mass", "F")
-    self.out.branch("HY_ZF2R_pt", "F")
-    self.out.branch("HY_ZF2R_eta", "F")
-    self.out.branch("HY_ZF2R_phi", "F")
-    self.out.branch("HY_ZF2R_mass", "F")
-    self.out.branch("HYZQQ_pt", "F",lenVar="nHYZQQ")
-    self.out.branch("HYZQQ_eta", "F",lenVar="nHYZQQ")
-    self.out.branch("HYZQQ_phi", "F",lenVar="nHYZQQ")
-    self.out.branch("HYZQQ_mass", "F",lenVar="nHYZQQ")
+    self.out.branch("Y_2F0R_pt", "F")
+    self.out.branch("Y_2F0R_eta", "F")
+    self.out.branch("Y_2F0R_phi", "F")
+    self.out.branch("Y_2F0R_mass", "F")
     self.out.branch("X_2F0R_pt", "F")
     self.out.branch("X_2F0R_eta", "F")
     self.out.branch("X_2F0R_phi", "F")
     self.out.branch("X_2F0R_mass", "F")
+
+    self.out.branch("Y_ZF2R_pt", "F")
+    self.out.branch("Y_ZF2R_eta", "F")
+    self.out.branch("Y_ZF2R_phi", "F")
+    self.out.branch("Y_ZF2R_mass", "F")
     self.out.branch("X_ZF2R_pt", "F")
     self.out.branch("X_ZF2R_eta", "F")
     self.out.branch("X_ZF2R_phi", "F")
     self.out.branch("X_ZF2R_mass", "F")
+
+    self.out.branch("YZQQ_pt", "F",lenVar="nYZQQ")
+    self.out.branch("YZQQ_eta", "F",lenVar="nYZQQ")
+    self.out.branch("YZQQ_phi", "F",lenVar="nYZQQ")
+    self.out.branch("YZQQ_mass", "F",lenVar="nYZQQ")
     self.out.branch("XZQQ_pt", "F",lenVar="nXZQQ")
     self.out.branch("XZQQ_eta", "F",lenVar="nXZQQ")
     self.out.branch("XZQQ_phi", "F",lenVar="nXZQQ")
@@ -183,8 +207,7 @@ class HHProducer(Module):
     
     # PV selection
     if (event.PV_npvsGood<1): return False
-    if self.is_signal:
-      if abs(event.GEN_zj1_pdgid)==5: return False
+    if self.is_signal and abs(event.GEN_zj1_pdgid)==5: return False
 
     # trigger selection
     # special action for 2017 single ele HLT, https://twiki.cern.ch/twiki/bin/viewauth/CMS/Egamma2017DataRecommendations#Single_Electron_Triggers
@@ -303,7 +326,7 @@ class HHProducer(Module):
     if nFatjet_MP>0:
       for ij_tmp in range(nFatjet_MP):
         # e.g., if TightFatJet_id=[0,2,3], it mean the 1th,3rd,4th jet in FatJetNoVLep pass the MP
-        if TightFatJet_drl1[ij_tmp]>0.8 and TightFatJet_drl1[ij_tmp]>0.8:
+        if TightFatJet_drl1[ij_tmp]>0.8 and TightFatJet_drl2[ij_tmp]>0.8:
           TightFatJet_drLa08_id.append(ij_tmp)
         else:
           TightFatJet_drSm08_id.append(ij_tmp)
@@ -976,10 +999,10 @@ class HHProducer(Module):
     HYv4_tmp=TLorentzVector()
     Xv4_tmp=TLorentzVector()
 
-    HY_2F0R_pt=-99
-    HY_2F0R_eta=-99
-    HY_2F0R_phi=-99
-    HY_2F0R_mass=-99
+    Y_2F0R_pt=-99
+    Y_2F0R_eta=-99
+    Y_2F0R_phi=-99
+    Y_2F0R_mass=-99
     X_2F0R_pt=-99
     X_2F0R_eta=-99
     X_2F0R_phi=-99
@@ -991,19 +1014,19 @@ class HHProducer(Module):
       HFatv4_tmp.SetPtEtaPhiM(H_AK8Jet_pt,H_AK8Jet_eta,H_AK8Jet_phi,H_AK8Jet_mass)
       HYv4_tmp=l1v4_tmp+l2v4_tmp+ZFatv4_tmp
       Xv4_tmp=HYv4_tmp+HFatv4_tmp
-      HY_2F0R_pt=HYv4_tmp.Pt()
-      HY_2F0R_eta=HYv4_tmp.Eta()
-      HY_2F0R_phi=HYv4_tmp.Phi()
-      HY_2F0R_mass=HYv4_tmp.M()
+      Y_2F0R_pt=HYv4_tmp.Pt()
+      Y_2F0R_eta=HYv4_tmp.Eta()
+      Y_2F0R_phi=HYv4_tmp.Phi()
+      Y_2F0R_mass=HYv4_tmp.M()
       X_2F0R_pt=Xv4_tmp.Pt()
       X_2F0R_eta=Xv4_tmp.Eta()
       X_2F0R_phi=Xv4_tmp.Phi()
       X_2F0R_mass=Xv4_tmp.M()
 
-    self.out.fillBranch("HY_2F0R_pt",HY_2F0R_pt)
-    self.out.fillBranch("HY_2F0R_eta",HY_2F0R_eta)
-    self.out.fillBranch("HY_2F0R_phi",HY_2F0R_phi)
-    self.out.fillBranch("HY_2F0R_mass",HY_2F0R_mass)
+    self.out.fillBranch("Y_2F0R_pt",Y_2F0R_pt)
+    self.out.fillBranch("Y_2F0R_eta",Y_2F0R_eta)
+    self.out.fillBranch("Y_2F0R_phi",Y_2F0R_phi)
+    self.out.fillBranch("Y_2F0R_mass",Y_2F0R_mass)
     self.out.fillBranch("X_2F0R_pt",X_2F0R_pt)
     self.out.fillBranch("X_2F0R_eta",X_2F0R_eta)
     self.out.fillBranch("X_2F0R_phi",X_2F0R_phi)
@@ -1023,10 +1046,12 @@ class HHProducer(Module):
 
     # don't remove overlap with selected Fatjet, used to define TTbar and DY CR
     TightAK4JetCRall_id = []
-    TightAK4JetCRall_b_DeepCSVloose_id = []
+    TightAK4JetCRall_b_DeepJetL_id = []
+    TightAK4JetCRall_b_DeepJetM_id = []
 
     # remove overlap with selected Fatjet, used for SR
     TightAK4Jet_id = []
+    TightAK4Jet_initid = []
     TightAK4Jet_pt = []
     TightAK4Jet_eta = []
     TightAK4Jet_phi = []
@@ -1036,8 +1061,8 @@ class HHProducer(Module):
     TightAK4Jet_dRinit = []
 
     TightAK4Jet_nob_id = []
-    TightAK4Jet_b_DeepCSVmedium_id = []
-    TightAK4Jet_b_DeepCSVloose_id = []
+    TightAK4Jet_b_DeepJetM_id = []
+    TightAK4Jet_b_DeepJetL_id = []
     nobjet_v4_passdrlep_id = []
     nobjet_v4_faildrlep_id = []
 
@@ -1078,8 +1103,12 @@ class HHProducer(Module):
 
       # don't remove overlap with FatJet
       TightAK4JetCRall_id.append(ijet)
-      if jets[ijet].drl1>0.4 and jets[ijet].drl2>0.4 and jets_init[jets[ijet].id].btagDeepFlavB > loose_Bcut:
-        TightAK4JetCRall_b_DeepCSVloose_id.append(ijet)
+      if jets[ijet].drl1>0.4 and jets[ijet].drl2>0.4:
+        if jets_init[jets[ijet].id].btagDeepFlavB > medium_Bcut:
+          TightAK4JetCRall_b_DeepJetM_id.append(ijet)
+          TightAK4JetCRall_b_DeepJetL_id.append(ijet)
+        elif jets_init[jets[ijet].id].btagDeepFlavB > loose_Bcut:
+          TightAK4JetCRall_b_DeepJetL_id.append(ijet)
 
       # remove overlap with FatJet
       if H_AK8Jet_id>-1:
@@ -1092,6 +1121,7 @@ class HHProducer(Module):
         if jet_v4_temp.DeltaR(fatjetv4_tmp_)<0.8:continue
 
       TightAK4Jet_id.append(ijet)
+      TightAK4Jet_initid.append(jets[ijet].id)
       TightAK4Jet_pt.append(jets[ijet].pt_nom)
       TightAK4Jet_eta.append(jets[ijet].eta)
       TightAK4Jet_phi.append(jets[ijet].phi)
@@ -1107,65 +1137,103 @@ class HHProducer(Module):
           nobjet_v4_passdrlep_id.append(ijet)
           nobjet_v4_passdrlep.append(jet_v4_temp.Clone())
         else:
-          TightAK4Jet_b_DeepCSVloose_id.append(ijet)
+          TightAK4Jet_b_DeepJetL_id.append(ijet)
           bjet_v4_all.append(jet_v4_temp.Clone())
           if jets_init[jets[ijet].id].btagDeepFlavB > medium_Bcut:
-            TightAK4Jet_b_DeepCSVmedium_id.append(ijet)
+            TightAK4Jet_b_DeepJetM_id.append(ijet)
       else:
         nobjet_v4_faildrlep_id.append(ijet)
         nobjet_v4_faildrlep.append(jet_v4_temp.Clone())
 
-    # TTbar region definition: mll>105, MET>100
+    nTightAK4JetCRall_b_DeepJetL = len(TightAK4JetCRall_b_DeepJetL_id)
+    nTightAK4JetCRall_b_DeepJetM = len(TightAK4JetCRall_b_DeepJetM_id)
+
+    # TTbar region definition: mll>105
     TTCR_b1v4=TLorentzVector()
     TTCR_b2v4=TLorentzVector()
     TTCR_b1id_tmp=-1
     TTCR_b2id_tmp=-1
-    TT_region=False
-    TT_region_withMbb=False
-    TT_b1_pt=-99
-    TT_b1_eta=-99
-    TT_b1_phi=-99
-    TT_b1_mass=-99
-    TT_b2_pt=-99
-    TT_b2_eta=-99
-    TT_b2_phi=-99
-    TT_b2_mass=-99
-    TT_mbb=-99
-    TT_b1_drl1=-99
-    TT_b1_drl2=-99
-    TT_b2_drl1=-99
-    TT_b2_drl2=-99
 
-    if (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepCSVloose_id)>1:
-      TT_region=True
-    if TT_region:
-      TTCR_b1id_tmp=TightAK4JetCRall_b_DeepCSVloose_id[0]
-      TTCR_b2id_tmp=TightAK4JetCRall_b_DeepCSVloose_id[1]
+    TT_region_Lbb=False
+    TT_Lb1_pt=-99
+    TT_Lb1_eta=-99
+    TT_Lb1_phi=-99
+    TT_Lb1_mass=-99
+    TT_Lb2_pt=-99
+    TT_Lb2_eta=-99
+    TT_Lb2_phi=-99
+    TT_Lb2_mass=-99
+    TT_Lmbb=-99
+    TT_Lb1_drl1=-99
+    TT_Lb1_drl2=-99
+    TT_Lb2_drl1=-99
+    TT_Lb2_drl2=-99
+
+    TT_region_Mbb=False
+    TT_Mb1_pt=-99
+    TT_Mb1_eta=-99
+    TT_Mb1_phi=-99
+    TT_Mb1_mass=-99
+    TT_Mb2_pt=-99
+    TT_Mb2_eta=-99
+    TT_Mb2_phi=-99
+    TT_Mb2_mass=-99
+    TT_Mmbb=-99
+    TT_Mb1_drl1=-99
+    TT_Mb1_drl2=-99
+    TT_Mb2_drl1=-99
+    TT_Mb2_drl2=-99
+
+    if IsSS and (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepJetL_id)>1:
+      TT_region_Lbb=True
+    if TT_region_Lbb:
+      TTCR_b1id_tmp=TightAK4JetCRall_b_DeepJetL_id[0]
+      TTCR_b2id_tmp=TightAK4JetCRall_b_DeepJetL_id[1]
       TTCR_b1v4.SetPtEtaPhiM(jets[TTCR_b1id_tmp].pt_nom,jets[TTCR_b1id_tmp].eta,jets[TTCR_b1id_tmp].phi,jets[TTCR_b1id_tmp].mass_nom)
       TTCR_b2v4.SetPtEtaPhiM(jets[TTCR_b2id_tmp].pt_nom,jets[TTCR_b2id_tmp].eta,jets[TTCR_b2id_tmp].phi,jets[TTCR_b2id_tmp].mass_nom)
-      TT_b1_pt=TTCR_b1v4.Pt()
-      TT_b1_eta=TTCR_b1v4.Eta()
-      TT_b1_phi=TTCR_b1v4.Phi()
-      TT_b1_mass=TTCR_b1v4.M()
-      TT_b2_pt=TTCR_b2v4.Pt()
-      TT_b2_eta=TTCR_b2v4.Eta()
-      TT_b2_phi=TTCR_b2v4.Phi()
-      TT_b2_mass=TTCR_b2v4.M()
-      TT_mbb=(TTCR_b1v4+TTCR_b2v4).M()
-      TT_b1_drl1=TTCR_b1v4.DeltaR(l1v4_tmp)
-      TT_b1_drl2=TTCR_b1v4.DeltaR(l2v4_tmp)
-      TT_b2_drl1=TTCR_b2v4.DeltaR(l1v4_tmp)
-      TT_b2_drl2=TTCR_b2v4.DeltaR(l2v4_tmp)
-      if TT_mbb>100 and TT_mbb<150:
-        TT_region_withMbb=True
+      TT_Lb1_pt=TTCR_b1v4.Pt()
+      TT_Lb1_eta=TTCR_b1v4.Eta()
+      TT_Lb1_phi=TTCR_b1v4.Phi()
+      TT_Lb1_mass=TTCR_b1v4.M()
+      TT_Lb2_pt=TTCR_b2v4.Pt()
+      TT_Lb2_eta=TTCR_b2v4.Eta()
+      TT_Lb2_phi=TTCR_b2v4.Phi()
+      TT_Lb2_mass=TTCR_b2v4.M()
+      TT_Lmbb=(TTCR_b1v4+TTCR_b2v4).M()
+      TT_Lb1_drl1=TTCR_b1v4.DeltaR(l1v4_tmp)
+      TT_Lb1_drl2=TTCR_b1v4.DeltaR(l2v4_tmp)
+      TT_Lb2_drl1=TTCR_b2v4.DeltaR(l1v4_tmp)
+      TT_Lb2_drl2=TTCR_b2v4.DeltaR(l2v4_tmp)
+      
+    if IsSS and (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepJetM_id)>1:
+      TT_region_Mbb=True
+    if TT_region_Mbb:
+      TTCR_b1id_tmp=TightAK4JetCRall_b_DeepJetM_id[0]
+      TTCR_b2id_tmp=TightAK4JetCRall_b_DeepJetM_id[1]
+      TTCR_b1v4.SetPtEtaPhiM(jets[TTCR_b1id_tmp].pt_nom,jets[TTCR_b1id_tmp].eta,jets[TTCR_b1id_tmp].phi,jets[TTCR_b1id_tmp].mass_nom)
+      TTCR_b2v4.SetPtEtaPhiM(jets[TTCR_b2id_tmp].pt_nom,jets[TTCR_b2id_tmp].eta,jets[TTCR_b2id_tmp].phi,jets[TTCR_b2id_tmp].mass_nom)
+      TT_Mb1_pt=TTCR_b1v4.Pt()
+      TT_Mb1_eta=TTCR_b1v4.Eta()
+      TT_Mb1_phi=TTCR_b1v4.Phi()
+      TT_Mb1_mass=TTCR_b1v4.M()
+      TT_Mb2_pt=TTCR_b2v4.Pt()
+      TT_Mb2_eta=TTCR_b2v4.Eta()
+      TT_Mb2_phi=TTCR_b2v4.Phi()
+      TT_Mb2_mass=TTCR_b2v4.M()
+      TT_Mmbb=(TTCR_b1v4+TTCR_b2v4).M()
+      TT_Mb1_drl1=TTCR_b1v4.DeltaR(l1v4_tmp)
+      TT_Mb1_drl2=TTCR_b1v4.DeltaR(l2v4_tmp)
+      TT_Mb2_drl1=TTCR_b2v4.DeltaR(l1v4_tmp)
+      TT_Mb2_drl2=TTCR_b2v4.DeltaR(l2v4_tmp)
       
     # DY region definition: 75<mll<105, no b or (mbb>150 or mbb <100)
-    DY_region_nob=False
-    DY_region_b=False
+    DY2J_region=False
+    DY2J_region_nob=False
     DYCR_j1v4=TLorentzVector()
     DYCR_j2v4=TLorentzVector()
     DYCR_j1id_tmp=-1
     DYCR_j2id_tmp=-1
+
     DY_j1_pt=-99
     DY_j1_eta=-99
     DY_j1_phi=-99
@@ -1179,9 +1247,9 @@ class HHProducer(Module):
     DY_j1_drl2=-99
     DY_j2_drl1=-99
     DY_j2_drl2=-99
-    if (l1v4_tmp+l2v4_tmp).M()<105 and (l1v4_tmp+l2v4_tmp).M()>75:
-      if len(TightAK4JetCRall_b_DeepCSVloose_id)<1 and len(TightAK4JetCRall_id)>1:
-        DY_region_nob=True
+
+    if IsSS and (l1v4_tmp+l2v4_tmp).M()<105 and (l1v4_tmp+l2v4_tmp).M()>75 and len(TightAK4JetCRall_id)>1:
+        DY2J_region=True
         DYCR_j1id_tmp=TightAK4JetCRall_id[0]
         DYCR_j2id_tmp=TightAK4JetCRall_id[1]
         DYCR_j1v4.SetPtEtaPhiM(jets[DYCR_j1id_tmp].pt_nom,jets[DYCR_j1id_tmp].eta,jets[DYCR_j1id_tmp].phi,jets[DYCR_j1id_tmp].mass_nom)
@@ -1199,42 +1267,42 @@ class HHProducer(Module):
         DY_j1_drl2=DYCR_j1v4.DeltaR(l2v4_tmp)
         DY_j2_drl1=DYCR_j2v4.DeltaR(l1v4_tmp)
         DY_j2_drl2=DYCR_j2v4.DeltaR(l2v4_tmp)
-      elif len(TightAK4JetCRall_b_DeepCSVloose_id)>1:
-        DY_region_b=True
-        DYCR_j1id_tmp=TightAK4JetCRall_b_DeepCSVloose_id[0]
-        DYCR_j2id_tmp=TightAK4JetCRall_b_DeepCSVloose_id[1]
-        DYCR_j1v4.SetPtEtaPhiM(jets[DYCR_j1id_tmp].pt_nom,jets[DYCR_j1id_tmp].eta,jets[DYCR_j1id_tmp].phi,jets[DYCR_j1id_tmp].mass_nom)
-        DYCR_j2v4.SetPtEtaPhiM(jets[DYCR_j2id_tmp].pt_nom,jets[DYCR_j2id_tmp].eta,jets[DYCR_j2id_tmp].phi,jets[DYCR_j2id_tmp].mass_nom)
-        DY_j1_pt=DYCR_j1v4.Pt()
-        DY_j1_eta=DYCR_j1v4.Eta()
-        DY_j1_phi=DYCR_j1v4.Phi()
-        DY_j1_mass=DYCR_j1v4.M()
-        DY_j2_pt=DYCR_j2v4.Pt()
-        DY_j2_eta=DYCR_j2v4.Eta()
-        DY_j2_phi=DYCR_j2v4.Phi()
-        DY_j2_mass=DYCR_j2v4.M()
-        DY_mjj=(DYCR_j1v4+DYCR_j2v4).M()
-        DY_j1_drl1=DYCR_j1v4.DeltaR(l1v4_tmp)
-        DY_j1_drl2=DYCR_j1v4.DeltaR(l2v4_tmp)
-        DY_j2_drl1=DYCR_j2v4.DeltaR(l1v4_tmp)
 
-    self.out.fillBranch("TT_region",TT_region)
-    self.out.fillBranch("TT_region_withMbb",TT_region_withMbb)
-    self.out.fillBranch("TT_b1_pt",TT_b1_pt)
-    self.out.fillBranch("TT_b1_eta",TT_b1_eta)
-    self.out.fillBranch("TT_b1_phi",TT_b1_phi)
-    self.out.fillBranch("TT_b1_mass",TT_b1_mass)
-    self.out.fillBranch("TT_b2_pt",TT_b2_pt)
-    self.out.fillBranch("TT_b2_eta",TT_b2_eta)
-    self.out.fillBranch("TT_b2_phi",TT_b2_phi)
-    self.out.fillBranch("TT_b2_mass",TT_b2_mass)
-    self.out.fillBranch("TT_mbb",TT_mbb)
-    self.out.fillBranch("TT_b1_drl1",TT_b1_drl1)
-    self.out.fillBranch("TT_b1_drl2",TT_b1_drl2)
-    self.out.fillBranch("TT_b2_drl1",TT_b2_drl1)
-    self.out.fillBranch("TT_b2_drl2",TT_b2_drl2)
+      if len(TightAK4JetCRall_b_DeepJetL_id)<1:
+        DY2J_region_nob=True
+
+    self.out.fillBranch("TT_region_Lbb",TT_region_Lbb)
+    self.out.fillBranch("TT_Lb1_pt",TT_Lb1_pt)
+    self.out.fillBranch("TT_Lb1_eta",TT_Lb1_eta)
+    self.out.fillBranch("TT_Lb1_phi",TT_Lb1_phi)
+    self.out.fillBranch("TT_Lb1_mass",TT_Lb1_mass)
+    self.out.fillBranch("TT_Lb2_pt",TT_Lb2_pt)
+    self.out.fillBranch("TT_Lb2_eta",TT_Lb2_eta)
+    self.out.fillBranch("TT_Lb2_phi",TT_Lb2_phi)
+    self.out.fillBranch("TT_Lb2_mass",TT_Lb2_mass)
+    self.out.fillBranch("TT_Lmbb",TT_Lmbb)
+    self.out.fillBranch("TT_Lb1_drl1",TT_Lb1_drl1)
+    self.out.fillBranch("TT_Lb1_drl2",TT_Lb1_drl2)
+    self.out.fillBranch("TT_Lb2_drl1",TT_Lb2_drl1)
+    self.out.fillBranch("TT_Lb2_drl2",TT_Lb2_drl2)
+
+    self.out.fillBranch("TT_region_Mbb",TT_region_Mbb)
+    self.out.fillBranch("TT_Mb1_pt",TT_Mb1_pt)
+    self.out.fillBranch("TT_Mb1_eta",TT_Mb1_eta)
+    self.out.fillBranch("TT_Mb1_phi",TT_Mb1_phi)
+    self.out.fillBranch("TT_Mb1_mass",TT_Mb1_mass)
+    self.out.fillBranch("TT_Mb2_pt",TT_Mb2_pt)
+    self.out.fillBranch("TT_Mb2_eta",TT_Mb2_eta)
+    self.out.fillBranch("TT_Mb2_phi",TT_Mb2_phi)
+    self.out.fillBranch("TT_Mb2_mass",TT_Mb2_mass)
+    self.out.fillBranch("TT_Mmbb",TT_Mmbb)
+    self.out.fillBranch("TT_Mb1_drl1",TT_Mb1_drl1)
+    self.out.fillBranch("TT_Mb1_drl2",TT_Mb1_drl2)
+    self.out.fillBranch("TT_Mb2_drl1",TT_Mb2_drl1)
+    self.out.fillBranch("TT_Mb2_drl2",TT_Mb2_drl2)
+
+    self.out.fillBranch("DY_region",DY_region)
     self.out.fillBranch("DY_region_nob",DY_region_nob)
-    self.out.fillBranch("DY_region_b",DY_region_b)
     self.out.fillBranch("DY_j1_pt",DY_j1_pt)
     self.out.fillBranch("DY_j1_eta",DY_j1_eta)
     self.out.fillBranch("DY_j1_phi",DY_j1_phi)
@@ -1254,13 +1322,13 @@ class HHProducer(Module):
       HT=HT + jets[ijet].pt_nom
     self.out.fillBranch("HT",HT)
 
-    TightAK4Jet_nob_id = [x for x in TightAK4Jet_id if (x not in TightAK4Jet_b_DeepCSVloose_id)]
+    TightAK4Jet_nob_id = [x for x in TightAK4Jet_id if (x not in TightAK4Jet_b_DeepJetL_id)]
     nobjet_v4_all = [x for x in jet_v4_all if x not in bjet_v4_all]
 
     n_tight_jet=len(TightAK4Jet_id)
 
-    n_bjet_DeepB_M = len(TightAK4Jet_b_DeepCSVmedium_id)
-    n_bjet_DeepB_L = len(TightAK4Jet_b_DeepCSVloose_id)
+    n_bjet_DeepB_M = len(TightAK4Jet_b_DeepJetM_id)
+    n_bjet_DeepB_L = len(TightAK4Jet_b_DeepJetL_id)
     n_tight_nob = len(TightAK4Jet_nob_id)
     self.out.fillBranch("n_bjet_DeepB_M",n_bjet_DeepB_M)
     self.out.fillBranch("n_bjet_DeepB_L",n_bjet_DeepB_L)
@@ -1269,12 +1337,7 @@ class HHProducer(Module):
     Had_tau_id.extend(np.zeros(event.nTau-len(Had_tau_id),int)-1)
     self.out.fillBranch("Had_tau_id", Had_tau_id)
     
-#      pass_jet_lep_Dr=1
-#      for ilep in range(0,len(tightLeptons)):
-#	if jet_v4_temp.DeltaR(tightLeptons[ilep])<0.4:pass_jet_lep_Dr=0
-#
-#      if not (pass_jet_lep_Dr>0):continue
-
+    # start the resolved decay of Z and H
     h_j1_pt=-99
     h_j1_eta=-99
     h_j1_phi=-99
@@ -1334,7 +1397,7 @@ class HHProducer(Module):
               h_j1_eta=bjet_v4_all[0].Eta()
               h_j1_phi=bjet_v4_all[0].Phi()
               h_j1_mass=bjet_v4_all[0].M()
-              h_j1_id=TightAK4Jet_b_DeepCSVloose_id[0]
+              h_j1_id=TightAK4Jet_b_DeepJetL_id[0]
               h_j1_drl1=jets[h_j1_id].drl1
               h_j1_drl2=jets[h_j1_id].drl2
               h_j2_pt=nobjet_v4_passdrlep[hbb_v4_temp].Pt()
@@ -1357,7 +1420,7 @@ class HHProducer(Module):
               h_j2_eta=bjet_v4_all[0].Eta()
               h_j2_phi=bjet_v4_all[0].Phi()
               h_j2_mass=bjet_v4_all[0].M()
-              h_j2_id=TightAK4Jet_b_DeepCSVloose_id[0]
+              h_j2_id=TightAK4Jet_b_DeepJetL_id[0]
               h_j2_drl1=jets[h_j2_id].drl1
               h_j2_drl2=jets[h_j2_id].drl2
 
@@ -1372,14 +1435,14 @@ class HHProducer(Module):
           h_j1_eta=bjet_v4_all[0].Eta()
           h_j1_phi=bjet_v4_all[0].Phi()
           h_j1_mass=bjet_v4_all[0].M()
-          h_j1_id=TightAK4Jet_b_DeepCSVloose_id[0]
+          h_j1_id=TightAK4Jet_b_DeepJetL_id[0]
           h_j1_drl1=jets[h_j1_id].drl1
           h_j1_drl2=jets[h_j1_id].drl2
           h_j2_pt=bjet_v4_all[1].Pt()
           h_j2_eta=bjet_v4_all[1].Eta()
           h_j2_phi=bjet_v4_all[1].Phi()
           h_j2_mass=bjet_v4_all[1].M()
-          h_j2_id=TightAK4Jet_b_DeepCSVloose_id[1]
+          h_j2_id=TightAK4Jet_b_DeepJetL_id[1]
           h_j2_drl1=jets[h_j2_id].drl1
           h_j2_drl2=jets[h_j2_id].drl2
           h_mjj=(bjet_v4_all[0]+bjet_v4_all[1]).M()
@@ -1405,14 +1468,14 @@ class HHProducer(Module):
           h_j1_eta=h_j1_v4_temp.Eta()
           h_j1_phi=h_j1_v4_temp.Phi()
           h_j1_mass=h_j1_v4_temp.M()
-          h_j1_id=TightAK4Jet_b_DeepCSVloose_id[hbb_id_item_temp[hbb_min_item_temp][0]]
+          h_j1_id=TightAK4Jet_b_DeepJetL_id[hbb_id_item_temp[hbb_min_item_temp][0]]
           h_j1_drl1=jets[h_j1_id].drl1
           h_j1_drl2=jets[h_j1_id].drl2
           h_j2_pt=h_j2_v4_temp.Pt()
           h_j2_eta=h_j2_v4_temp.Eta()
           h_j2_phi=h_j2_v4_temp.Phi()
           h_j2_mass=h_j2_v4_temp.M()
-          h_j2_id=TightAK4Jet_b_DeepCSVloose_id[hbb_id_item_temp[hbb_min_item_temp][1]]
+          h_j2_id=TightAK4Jet_b_DeepJetL_id[hbb_id_item_temp[hbb_min_item_temp][1]]
           h_j2_drl1=jets[h_j2_id].drl1
           h_j2_drl2=jets[h_j2_id].drl2
           h_mjj=(h_j1_v4_temp+h_j2_v4_temp).M()
@@ -1697,7 +1760,7 @@ class HHProducer(Module):
               h_j1_eta=bjet_v4_all[0].Eta()
               h_j1_phi=bjet_v4_all[0].Phi()
               h_j1_mass=bjet_v4_all[0].M()
-              h_j1_id=TightAK4Jet_b_DeepCSVloose_id[0]
+              h_j1_id=TightAK4Jet_b_DeepJetL_id[0]
               h_j1_drl1=jets[h_j1_id].drl1
               h_j1_drl2=jets[h_j1_id].drl2
               h_j2_pt=nobjet_v4_passdrlep[hbb_v4_temp].Pt()
@@ -1719,7 +1782,7 @@ class HHProducer(Module):
               h_j2_eta=bjet_v4_all[0].Eta()
               h_j2_phi=bjet_v4_all[0].Phi()
               h_j2_mass=bjet_v4_all[0].M()
-              h_j2_id=TightAK4Jet_b_DeepCSVloose_id[0]
+              h_j2_id=TightAK4Jet_b_DeepJetL_id[0]
               h_j2_drl1=jets[h_j2_id].drl1
               h_j2_drl2=jets[h_j2_id].drl2
 
@@ -1733,14 +1796,14 @@ class HHProducer(Module):
           h_j1_eta=bjet_v4_all[0].Eta()
           h_j1_phi=bjet_v4_all[0].Phi()
           h_j1_mass=bjet_v4_all[0].M()
-          h_j1_id=TightAK4Jet_b_DeepCSVloose_id[0]
+          h_j1_id=TightAK4Jet_b_DeepJetL_id[0]
           h_j1_drl1=jets[h_j1_id].drl1
           h_j1_drl2=jets[h_j1_id].drl2
           h_j2_pt=bjet_v4_all[1].Pt()
           h_j2_eta=bjet_v4_all[1].Eta()
           h_j2_phi=bjet_v4_all[1].Phi()
           h_j2_mass=bjet_v4_all[1].M()
-          h_j2_id=TightAK4Jet_b_DeepCSVloose_id[1]
+          h_j2_id=TightAK4Jet_b_DeepJetL_id[1]
           h_j2_drl1=jets[h_j2_id].drl1
           h_j2_drl2=jets[h_j2_id].drl2
           h_mjj=(bjet_v4_all[0]+bjet_v4_all[1]).M()
@@ -1765,14 +1828,14 @@ class HHProducer(Module):
           h_j1_eta=h_j1_v4_temp.Eta()
           h_j1_phi=h_j1_v4_temp.Phi()
           h_j1_mass=h_j1_v4_temp.M()
-          h_j1_id=TightAK4Jet_b_DeepCSVloose_id[hbb_id_item_temp[hbb_min_item_temp][0]]
+          h_j1_id=TightAK4Jet_b_DeepJetL_id[hbb_id_item_temp[hbb_min_item_temp][0]]
           h_j1_drl1=jets[h_j1_id].drl1
           h_j1_drl2=jets[h_j1_id].drl2
           h_j2_pt=h_j2_v4_temp.Pt()
           h_j2_eta=h_j2_v4_temp.Eta()
           h_j2_phi=h_j2_v4_temp.Phi()
           h_j2_mass=h_j2_v4_temp.M()
-          h_j2_id=TightAK4Jet_b_DeepCSVloose_id[hbb_id_item_temp[hbb_min_item_temp][1]]
+          h_j2_id=TightAK4Jet_b_DeepJetL_id[hbb_id_item_temp[hbb_min_item_temp][1]]
           h_j2_drl1=jets[h_j2_id].drl1
           h_j2_drl2=jets[h_j2_id].drl2
           h_mjj=(h_j1_v4_temp+h_j2_v4_temp).M()
@@ -2073,18 +2136,23 @@ class HHProducer(Module):
     self.out.fillBranch("zhad_dphijj",zhad_dphijj)
     self.out.fillBranch("zhad_zlep_mass",zhad_zlep_mass)
 
-    TightAK4JetCRall_b_DeepCSVloose_id.extend(np.zeros(len(TightAK4JetCRall_id)-len(TightAK4JetCRall_b_DeepCSVloose_id),int)-1)
+    TightAK4JetCRall_b_DeepJetL_id.extend(np.zeros(len(TightAK4JetCRall_id)-len(TightAK4JetCRall_b_DeepJetL_id),int)-1)
+    TightAK4JetCRall_b_DeepJetM_id.extend(np.zeros(len(TightAK4JetCRall_id)-len(TightAK4JetCRall_b_DeepJetM_id),int)-1)
     TightAK4Jet_nob_id.extend(np.zeros(n_tight_jet-n_tight_nob,int)-1)
-    TightAK4Jet_b_DeepCSVmedium_id.extend(np.zeros(n_tight_jet-n_bjet_DeepB_M,int)-1)
-    TightAK4Jet_b_DeepCSVloose_id.extend(np.zeros(n_tight_jet-n_bjet_DeepB_L,int)-1)
+    TightAK4Jet_b_DeepJetM_id.extend(np.zeros(n_tight_jet-n_bjet_DeepB_M,int)-1)
+    TightAK4Jet_b_DeepJetL_id.extend(np.zeros(n_tight_jet-n_bjet_DeepB_L,int)-1)
 
     self.out.fillBranch("TightAK4JetCRall_id",TightAK4JetCRall_id)
-    self.out.fillBranch("TightAK4JetCRall_b_DeepCSVloose_id",TightAK4JetCRall_b_DeepCSVloose_id)
+    self.out.fillBranch("TightAK4JetCRall_b_DeepJetL_id",TightAK4JetCRall_b_DeepJetL_id)
+    self.out.fillBranch("nTightAK4JetCRall_b_DeepJetL",nTightAK4JetCRall_b_DeepJetL)
+    self.out.fillBranch("nTightAK4JetCRall_b_DeepJetM",nTightAK4JetCRall_b_DeepJetM)
+    self.out.fillBranch("TightAK4JetCRall_b_DeepJetM_id",TightAK4JetCRall_b_DeepJetM_id)
 
     self.out.fillBranch("TightAK4Jet_id",TightAK4Jet_id)
+    self.out.fillBranch("TightAK4Jet_initid",TightAK4Jet_initid)
     self.out.fillBranch("TightAK4Jet_nob_id",TightAK4Jet_nob_id)
-    self.out.fillBranch("TightAK4Jet_b_DeepCSVmedium_id",TightAK4Jet_b_DeepCSVmedium_id)
-    self.out.fillBranch("TightAK4Jet_b_DeepCSVloose_id",TightAK4Jet_b_DeepCSVloose_id)
+    self.out.fillBranch("TightAK4Jet_b_DeepJetM_id",TightAK4Jet_b_DeepJetM_id)
+    self.out.fillBranch("TightAK4Jet_b_DeepJetL_id",TightAK4Jet_b_DeepJetL_id)
     self.out.fillBranch("TightAK4Jet_drl1",TightAK4Jet_drl1)
     self.out.fillBranch("TightAK4Jet_drl2",TightAK4Jet_drl2)
     self.out.fillBranch("TightAK4Jet_pt",TightAK4Jet_pt)
@@ -2093,10 +2161,10 @@ class HHProducer(Module):
     self.out.fillBranch("TightAK4Jet_mass",TightAK4Jet_mass)
     self.out.fillBranch("TightAK4Jet_dRinit",TightAK4Jet_dRinit)
 
-    HY_ZF2R_pt=-99
-    HY_ZF2R_eta=-99
-    HY_ZF2R_phi=-99
-    HY_ZF2R_mass=-99
+    Y_ZF2R_pt=-99
+    Y_ZF2R_eta=-99
+    Y_ZF2R_phi=-99
+    Y_ZF2R_mass=-99
     X_ZF2R_pt=-99
     X_ZF2R_eta=-99
     X_ZF2R_phi=-99
@@ -2109,28 +2177,28 @@ class HHProducer(Module):
       Hb2v4_tmp.SetPtEtaPhiM(h_j2_pt,h_j2_eta,h_j2_phi,h_j2_mass)
       HYv4_tmp=ZFatv4_tmp+l1v4_tmp+l2v4_tmp
       Xv4_tmp=HYv4_tmp+Hb1v4_tmp+Hb2v4_tmp
-      HY_ZF2R_pt=HYv4_tmp.Pt()
-      HY_ZF2R_eta=HYv4_tmp.Eta()
-      HY_ZF2R_phi=HYv4_tmp.Phi()
-      HY_ZF2R_mass=HYv4_tmp.M()
+      Y_ZF2R_pt=HYv4_tmp.Pt()
+      Y_ZF2R_eta=HYv4_tmp.Eta()
+      Y_ZF2R_phi=HYv4_tmp.Phi()
+      Y_ZF2R_mass=HYv4_tmp.M()
       X_ZF2R_pt=Xv4_tmp.Pt()
       X_ZF2R_eta=Xv4_tmp.Eta()
       X_ZF2R_phi=Xv4_tmp.Phi()
       X_ZF2R_mass=Xv4_tmp.M()
 
-    self.out.fillBranch("HY_ZF2R_pt",HY_ZF2R_pt)
-    self.out.fillBranch("HY_ZF2R_eta",HY_ZF2R_eta)
-    self.out.fillBranch("HY_ZF2R_phi",HY_ZF2R_phi)
-    self.out.fillBranch("HY_ZF2R_mass",HY_ZF2R_mass)
+    self.out.fillBranch("Y_ZF2R_pt",Y_ZF2R_pt)
+    self.out.fillBranch("Y_ZF2R_eta",Y_ZF2R_eta)
+    self.out.fillBranch("Y_ZF2R_phi",Y_ZF2R_phi)
+    self.out.fillBranch("Y_ZF2R_mass",Y_ZF2R_mass)
     self.out.fillBranch("X_ZF2R_pt",X_ZF2R_pt)
     self.out.fillBranch("X_ZF2R_eta",X_ZF2R_eta)
     self.out.fillBranch("X_ZF2R_phi",X_ZF2R_phi)
     self.out.fillBranch("X_ZF2R_mass",X_ZF2R_mass)
       
-    HYZQQ_pt=[]
-    HYZQQ_eta=[]
-    HYZQQ_phi=[]
-    HYZQQ_mass=[]
+    YZQQ_pt=[]
+    YZQQ_eta=[]
+    YZQQ_phi=[]
+    YZQQ_mass=[]
     XZQQ_pt=[]
     XZQQ_eta=[]
     XZQQ_phi=[]
@@ -2145,10 +2213,10 @@ class HHProducer(Module):
         Zj2v4_tmp.SetPtEtaPhiM(zhad_j2_pt[ijj],zhad_j2_eta[ijj],zhad_j2_phi[ijj],zhad_j2_mass[ijj])
         HYv4_tmp=Zj1v4_tmp+Zj2v4_tmp+l1v4_tmp+l2v4_tmp
         Xv4_tmp=HYv4_tmp+Hbbv4_tmp
-        HYZQQ_pt.append(HYv4_tmp.Pt())
-        HYZQQ_eta.append(HYv4_tmp.Eta())
-        HYZQQ_phi.append(HYv4_tmp.Phi())
-        HYZQQ_mass.append(HYv4_tmp.M())
+        YZQQ_pt.append(HYv4_tmp.Pt())
+        YZQQ_eta.append(HYv4_tmp.Eta())
+        YZQQ_phi.append(HYv4_tmp.Phi())
+        YZQQ_mass.append(HYv4_tmp.M())
         XZQQ_pt.append(Xv4_tmp.Pt())
         XZQQ_eta.append(Xv4_tmp.Eta())
         XZQQ_phi.append(Xv4_tmp.Phi())
@@ -2162,26 +2230,23 @@ class HHProducer(Module):
         Zj2v4_tmp.SetPtEtaPhiM(zhad_j2_pt[ijj],zhad_j2_eta[ijj],zhad_j2_phi[ijj],zhad_j2_mass[ijj])
         HYv4_tmp=Zj1v4_tmp+Zj2v4_tmp+l1v4_tmp+l2v4_tmp
         Xv4_tmp=HYv4_tmp+Hb1v4_tmp+Hb2v4_tmp
-        HYZQQ_pt.append(HYv4_tmp.Pt())
-        HYZQQ_eta.append(HYv4_tmp.Eta())
-        HYZQQ_phi.append(HYv4_tmp.Phi())
-        HYZQQ_mass.append(HYv4_tmp.M())
+        YZQQ_pt.append(HYv4_tmp.Pt())
+        YZQQ_eta.append(HYv4_tmp.Eta())
+        YZQQ_phi.append(HYv4_tmp.Phi())
+        YZQQ_mass.append(HYv4_tmp.M())
         XZQQ_pt.append(Xv4_tmp.Pt())
         XZQQ_eta.append(Xv4_tmp.Eta())
         XZQQ_phi.append(Xv4_tmp.Phi())
         XZQQ_mass.append(Xv4_tmp.M())
 
-    self.out.fillBranch("HYZQQ_pt",HYZQQ_pt)
-    self.out.fillBranch("HYZQQ_eta",HYZQQ_eta)
-    self.out.fillBranch("HYZQQ_phi",HYZQQ_phi)
-    self.out.fillBranch("HYZQQ_mass",HYZQQ_mass)
+    self.out.fillBranch("YZQQ_pt",YZQQ_pt)
+    self.out.fillBranch("YZQQ_eta",YZQQ_eta)
+    self.out.fillBranch("YZQQ_phi",YZQQ_phi)
+    self.out.fillBranch("YZQQ_mass",YZQQ_mass)
     self.out.fillBranch("XZQQ_pt",XZQQ_pt)
     self.out.fillBranch("XZQQ_eta",XZQQ_eta)
     self.out.fillBranch("XZQQ_phi",XZQQ_phi)
     self.out.fillBranch("XZQQ_mass",XZQQ_mass)
-
-    if not (TT_region or DY_region_nob or DY_region_b or HZ_2F0R or HZ_1F2R or HZ_0F4R):
-      return False
 
     return True
 
