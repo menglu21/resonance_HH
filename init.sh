@@ -14,11 +14,19 @@ export WORKING_PATH="$CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postproces
 echo $WORKING_PATH
 
 # change the Jet collection to lepton-subtraction Jet collection
-mv $WORKING_PATH/analysis/others/*.patch $WORKING_PATH/modules/jme/
+mv $WORKING_PATH/analysis/others/AK4.patch $WORKING_PATH/modules/jme/
+mv $WORKING_PATH/analysis/others/AK8.patch $WORKING_PATH/modules/jme/
+mv $WORKING_PATH/analysis/others/helper.patch $WORKING_PATH/modules/jme/
 cd $WORKING_PATH/modules/jme/
 patch -p0 jetmetUncertainties.py < AK4.patch
 patch -p0 fatJetUncertainties.py < AK8.patch
 patch -p0 jetmetHelperRun2.py < helper.patch
+cd -
+
+# change the jet collection for BtagSF
+mv $WORKING_PATH/analysis/others/btagSF.patch $WORKING_PATH/modules/jme/
+cd $WORKING_PATH/modules/btv/
+patch -p0 btagSFProducer.py < btagSF.patch
 cd -
 
 if [ "${year}" = "2016apv" ]; then

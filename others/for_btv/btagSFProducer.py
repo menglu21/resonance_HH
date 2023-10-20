@@ -293,7 +293,7 @@ class btagSFProducer(Module):
         self.out = wrappedOutputTree
         for central_or_syst in list(self.branchNames_central_and_systs.values()):
             for branch in list(central_or_syst.values()):
-                self.out.branch(branch, "F", lenVar="nJet")
+                self.out.branch(branch, "F", lenVar="nJetNoVlep")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -367,7 +367,7 @@ class btagSFProducer(Module):
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        jets = Collection(event, "Jet")
+        jets = Collection(event, "JetNoVlep")
 
         discr = None
         if self.algo == "csvv2":

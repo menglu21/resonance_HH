@@ -1,0 +1,92 @@
+--- btagSFProducer_init.py	2023-10-20 13:45:24.000000001 +0200
++++ btagSFProducer.py	2023-10-20 13:41:27.000000001 +0200
+@@ -36,7 +36,7 @@
+     """
+ 
+     def __init__(
+-            self, era, algo='csvv2', selectedWPs=['M', 'shape_corr'],
++            self, era, algo='deepjet', selectedWPs=['L','M'],
+             sfFileName=None, verbose=0, jesSystsForShape=["jes"]
+     ):
+         self.era = era
+@@ -122,6 +122,24 @@
+                 },
+             },
+             'deepjet': {
++                'UL2016apv': {
++                    'inputFileName': "wp_deepJet_UL16preVFP.csv",
++                    'measurement_types': {
++                        0: "comb",  # b
++                        1: "comb",  # c
++                        2: "incl"   # light
++                    },
++                    'supported_wp': ["L", "M", "T", "shape_corr"]
++                },
++                'UL2016': {
++                    'inputFileName': "wp_deepJet_UL16postVFP.csv",
++                    'measurement_types': {
++                        0: "comb",  # b
++                        1: "comb",  # c
++                        2: "incl"   # light
++                    },
++                    'supported_wp': ["L", "M", "T", "shape_corr"]
++                },
+                 'Legacy2016': {
+                     'inputFileName': "DeepJet_2016LegacySF_V1.csv",
+                     'measurement_types': {
+@@ -141,7 +159,7 @@
+                     'supported_wp': ["L", "M", "T", "shape_corr"]
+                 },
+                 'UL2017': {
+-                    'inputFileName': "DeepJet_106XUL17SF.csv",
++                    'inputFileName': "wp_deepJet_UL17.csv",
+                     'measurement_types': {
+                         0: "comb",  # b
+                         1: "comb",  # c
+@@ -150,7 +168,7 @@
+                     'supported_wp': ["L", "M", "T", "shape_corr"]
+                 },
+                 '2018': {
+-                    'inputFileName': "DeepJet_102XSF_V1.csv",
++                    'inputFileName': "DeepJet_106XUL18SF_V2.csv",
+                     'measurement_types': {
+                         0: "comb",  # b
+                         1: "comb",  # c
+@@ -159,7 +177,7 @@
+                     'supported_wp': ["L", "M", "T", "shape_corr"]
+                 },
+                 'UL2018': {
+-                    'inputFileName': "DeepJet_106XUL18SF.csv",
++                    'inputFileName': "wp_deepJet_UL18.csv",
+                     'measurement_types': {
+                         0: "comb",  # b
+                         1: "comb",  # c
+@@ -275,7 +293,7 @@
+         self.out = wrappedOutputTree
+         for central_or_syst in list(self.branchNames_central_and_systs.values()):
+             for branch in list(central_or_syst.values()):
+-                self.out.branch(branch, "F", lenVar="nJet")
++                self.out.branch(branch, "F", lenVar="nJetNoVlep")
+ 
+     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+         pass
+@@ -349,7 +367,7 @@
+ 
+     def analyze(self, event):
+         """process event, return True (go to next module) or False (fail, go to next event)"""
+-        jets = Collection(event, "Jet")
++        jets = Collection(event, "JetNoVlep")
+ 
+         discr = None
+         if self.algo == "csvv2":
+@@ -380,6 +398,7 @@
+ # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
+ 
+ 
+-btagSF2016 = lambda: btagSFProducer("2016")
+-btagSF2017 = lambda: btagSFProducer("2017")
+-
++btagSF2016ULapv = lambda: btagSFProducer("UL2016apv")
++btagSF2016UL = lambda: btagSFProducer("UL2016")
++btagSF2017UL = lambda: btagSFProducer("UL2017")
++btagSF2018UL = lambda: btagSFProducer("UL2018")

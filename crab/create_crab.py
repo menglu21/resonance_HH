@@ -40,6 +40,7 @@ with open(samplejson, 'r') as fin:
   lines=json.loads(data)
   keys=lines.keys()
   for key, value in lines.items() :
+    if not 'dynlo' in key:continue
     if len(value)==3:
       copyfile('data_cfg.py',workdir+key+'_cfg.py')
       value[1]=value[1].replace('/', 'sss')
@@ -79,11 +80,11 @@ with open(samplejson, 'r') as fin:
       os.system(r'sed -i "19s/sss/\//g" %s' %(workdir+key+'_cfg.py'))
       os.system(r'sed -i "26s/dummy/%s/g" %s' %(value[0],workdir+key+'_cfg.py'))
 
-if year=='2018':
-    os.system(r'sed -i "s/TTC_version9/2018/g" config_crab_2018/*_cfg.py')
-
-if year=='2016apv':
-  os.system(r'sed -i "s/TTC_version9/2016apv/g" config_crab_2016apv/*_cfg.py')
-
-if year=='2016':
-  os.system(r'sed -i "s/TTC_version9/2016postapv/g" config_crab_2016/*_cfg.py')
+#if year=='2018':
+#    os.system(r'sed -i "s/TTC_version9/2018/g" config_crab_2018/*_cfg.py')
+#
+#if year=='2016apv':
+#  os.system(r'sed -i "s/TTC_version9/2016apv/g" config_crab_2016apv/*_cfg.py')
+#
+#if year=='2016':
+#  os.system(r'sed -i "s/TTC_version9/2016postapv/g" config_crab_2016/*_cfg.py')
