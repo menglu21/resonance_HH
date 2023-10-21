@@ -1249,24 +1249,24 @@ class HHProducer(Module):
     DY_j2_drl2=-99
 
     if IsSS and (l1v4_tmp+l2v4_tmp).M()<105 and (l1v4_tmp+l2v4_tmp).M()>75 and len(TightAK4JetCRall_id)>1:
-        DY2J_region=True
-        DYCR_j1id_tmp=TightAK4JetCRall_id[0]
-        DYCR_j2id_tmp=TightAK4JetCRall_id[1]
-        DYCR_j1v4.SetPtEtaPhiM(jets[DYCR_j1id_tmp].pt_nom,jets[DYCR_j1id_tmp].eta,jets[DYCR_j1id_tmp].phi,jets[DYCR_j1id_tmp].mass_nom)
-        DYCR_j2v4.SetPtEtaPhiM(jets[DYCR_j2id_tmp].pt_nom,jets[DYCR_j2id_tmp].eta,jets[DYCR_j2id_tmp].phi,jets[DYCR_j2id_tmp].mass_nom)
-        DY_j1_pt=DYCR_j1v4.Pt()
-        DY_j1_eta=DYCR_j1v4.Eta()
-        DY_j1_phi=DYCR_j1v4.Phi()
-        DY_j1_mass=DYCR_j1v4.M()
-        DY_j2_pt=DYCR_j2v4.Pt()
-        DY_j2_eta=DYCR_j2v4.Eta()
-        DY_j2_phi=DYCR_j2v4.Phi()
-        DY_j2_mass=DYCR_j2v4.M()
-        DY_mjj=(DYCR_j1v4+DYCR_j2v4).M()
-        DY_j1_drl1=DYCR_j1v4.DeltaR(l1v4_tmp)
-        DY_j1_drl2=DYCR_j1v4.DeltaR(l2v4_tmp)
-        DY_j2_drl1=DYCR_j2v4.DeltaR(l1v4_tmp)
-        DY_j2_drl2=DYCR_j2v4.DeltaR(l2v4_tmp)
+      DY2J_region=True
+      DYCR_j1id_tmp=TightAK4JetCRall_id[0]
+      DYCR_j2id_tmp=TightAK4JetCRall_id[1]
+      DYCR_j1v4.SetPtEtaPhiM(jets[DYCR_j1id_tmp].pt_nom,jets[DYCR_j1id_tmp].eta,jets[DYCR_j1id_tmp].phi,jets[DYCR_j1id_tmp].mass_nom)
+      DYCR_j2v4.SetPtEtaPhiM(jets[DYCR_j2id_tmp].pt_nom,jets[DYCR_j2id_tmp].eta,jets[DYCR_j2id_tmp].phi,jets[DYCR_j2id_tmp].mass_nom)
+      DY_j1_pt=DYCR_j1v4.Pt()
+      DY_j1_eta=DYCR_j1v4.Eta()
+      DY_j1_phi=DYCR_j1v4.Phi()
+      DY_j1_mass=DYCR_j1v4.M()
+      DY_j2_pt=DYCR_j2v4.Pt()
+      DY_j2_eta=DYCR_j2v4.Eta()
+      DY_j2_phi=DYCR_j2v4.Phi()
+      DY_j2_mass=DYCR_j2v4.M()
+      DY_mjj=(DYCR_j1v4+DYCR_j2v4).M()
+      DY_j1_drl1=DYCR_j1v4.DeltaR(l1v4_tmp)
+      DY_j1_drl2=DYCR_j1v4.DeltaR(l2v4_tmp)
+      DY_j2_drl1=DYCR_j2v4.DeltaR(l1v4_tmp)
+      DY_j2_drl2=DYCR_j2v4.DeltaR(l2v4_tmp)
 
       if len(TightAK4JetCRall_b_DeepJetL_id)<1:
         DY2J_region_nob=True
