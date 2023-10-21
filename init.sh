@@ -24,7 +24,7 @@ patch -p0 jetmetHelperRun2.py < helper.patch
 cd -
 
 # change the jet collection for BtagSF
-mv $WORKING_PATH/analysis/others/btagSF.patch $WORKING_PATH/modules/jme/
+mv $WORKING_PATH/analysis/others/btagSF.patch $WORKING_PATH/modules/btv/
 cd $WORKING_PATH/modules/btv/
 patch -p0 btagSFProducer.py < btagSF.patch
 cd -
