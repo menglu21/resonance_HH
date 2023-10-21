@@ -37,12 +37,6 @@ if [ "${year}" = "2016apv" ]; then
   cp $WORKING_PATH/analysis/others/for_pileup/PileupHistogram-goldenJSON-13tev-UL2016-preVFP-99bins_withVar.root $WORKING_PATH/data/pileup/
   cp $WORKING_PATH/analysis/others/for_pileup/puWeightProducer.py $WORKING_PATH/modules/common/
 
-  echo Updating prefiring correction
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_jetempt_UL2016BtoH.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_jetpt_UL2016BtoH.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_photonpt_UL2016BtoH.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/PrefireCorr.py $WORKING_PATH/modules/common/
-  
   echo Updateing JME correction
   echo cleaning unused files
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
@@ -64,12 +58,6 @@ if [ "${year}" = "2016" ]; then
   cp $WORKING_PATH/analysis/others/for_pileup/PileupHistogram-goldenJSON-13tev-UL2016-postVFP-99bins_withVar.root $WORKING_PATH/data/pileup/
   cp $WORKING_PATH/analysis/others/for_pileup/puWeightProducer.py $WORKING_PATH/modules/common/
 
-  echo Updating prefiring correction
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_jetempt_UL2016BtoH.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_jetpt_UL2016BtoH.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_photonpt_UL2016BtoH.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/PrefireCorr.py $WORKING_PATH/modules/common/
-  
   echo Updateing JME correction
   echo cleaning unused files
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
@@ -90,12 +78,6 @@ if [ "${year}" = "2017" ]; then
   cp $WORKING_PATH/analysis/others/for_pileup/mcPileupUL2017.root $WORKING_PATH/data/pileup/
   cp $WORKING_PATH/analysis/others/for_pileup/PileupHistogram-goldenJSON-13tev-UL2017-99bins_withVar.root $WORKING_PATH/data/pileup/
   cp $WORKING_PATH/analysis/others/for_pileup/puWeightProducer.py $WORKING_PATH/modules/common/
-
-  echo Updating prefiring correction
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_jetempt_UL2017BtoF.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_jetpt_UL2017BtoF.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/L1prefiring_photonpt_UL2017BtoF.root $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/prefire_maps/
-  cp $WORKING_PATH/analysis/others/for_prefiring/PrefireCorr.py $WORKING_PATH/modules/common/
   
   echo Updateing JME correction
   echo cleaning unused files
