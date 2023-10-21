@@ -46,7 +46,8 @@ if [ "${year}" = "2016apv" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16preVFPSF_v2_skimmed.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
+  cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL16preVFP.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
@@ -67,7 +68,8 @@ if [ "${year}" = "2016" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL16postVFPSF_v3_skimmed.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
+  cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL16postVFP.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
@@ -92,7 +94,8 @@ if [ "${year}" = "2017" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepJet_106XUL17SF_V2p1.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
+  cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL17.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
@@ -112,7 +115,8 @@ if [ "${year}" = "2018" ]; then
   
   echo Updating BJet related
   cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
-  cp $WORKING_PATH/analysis/others/for_btv/DeepCSV_106XUL18SF_V1p1.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
+  rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
+  cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL18.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
 fi
 
