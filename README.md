@@ -3,7 +3,7 @@
 1. release CMSSW_10_6_29
 2. Set up NanoAOD tools
    ```bash
-   cd $CMSSW_BASE/src
+   cd CMSSW_10_6_29/src
 
    git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 
