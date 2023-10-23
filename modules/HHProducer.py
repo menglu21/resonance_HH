@@ -1301,8 +1301,8 @@ class HHProducer(Module):
     self.out.fillBranch("TT_Mb2_drl1",TT_Mb2_drl1)
     self.out.fillBranch("TT_Mb2_drl2",TT_Mb2_drl2)
 
-    self.out.fillBranch("DY_region",DY_region)
-    self.out.fillBranch("DY_region_nob",DY_region_nob)
+    self.out.fillBranch("DY2J_region",DY2J_region)
+    self.out.fillBranch("DY2J_region_nob",DY2J_region_nob)
     self.out.fillBranch("DY_j1_pt",DY_j1_pt)
     self.out.fillBranch("DY_j1_eta",DY_j1_eta)
     self.out.fillBranch("DY_j1_phi",DY_j1_phi)
