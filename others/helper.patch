@@ -1,5 +1,5 @@
---- jetmetHelperRun2_init.py	2023-07-06 12:02:11.000000001 +0200
-+++ jetmetHelperRun2.py	2023-07-05 14:35:12.000000001 +0200
+--- jetmetHelperRun2.py	2023-10-21 23:18:31.000000001 +0200
++++ /afs/cern.ch/user/m/melu/work/HH/CMSSW_10_6_29_old/src/PhysicsTools/NanoAODTools/python/postprocessing/modules/jme/jetmetHelperRun2.py	2023-07-05 14:35:12.000000001 +0200
 @@ -78,7 +78,7 @@
      '2018': 'Autumn18_V7b_MC',
      'UL2016_preVFP': 'Summer20UL16APV_JRV3_MC',
@@ -29,11 +29,10 @@
                  globalTag=jecTag_,
                  jesUncertainties=jmeUncert_,
                  jetType=jetType,
-@@ -199,4 +201,45 @@
+@@ -199,3 +201,45 @@
  #jmeCorrections = createJMECorrector(False, "2016", "B", "Total", True, "AK4PFchs", False)
  # include jmeCorrections() in the list of modules to run.
  ###
--
 +jmeCorrections_UL2016APVMC = createJMECorrector(True, "UL2016_preVFP", "B", "Total", "AK4PFchs", False)
 +jmeCorrections_UL2016MC = createJMECorrector(True, "UL2016", "B", "Total", "AK4PFchs", False)
 +jmeCorrections_UL2016B = createJMECorrector(False, "UL2016_preVFP", "B", "Total", "AK4PFchs", False)
