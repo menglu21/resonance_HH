@@ -620,8 +620,10 @@ class ZandLepSubSelector(Module):
         if JetNoVlep_muonIdx2[ij]>-1 and muons[JetNoVlep_muonIdx2[ij]].isGlobal:
           ak4_tmp_v4_ = ak4jet_arr_[ij] - muons[JetNoVlep_muonIdx2[ij]].p4()
 
-        JetNoVlep_muonSubtrFactor.append(1. - ak4_tmp_v4_.Pt()/ak4jet_arr_[ij].Pt())
-
+	if not ak4jet_arr_[ij].Pt()==0:
+          JetNoVlep_muonSubtrFactor.append(1. - ak4_tmp_v4_.Pt()/ak4jet_arr_[ij].Pt())
+	else:
+	  JetNoVlep_muonSubtrFactor.append(1.)
 
     JetNoVlep_array = sorted(zip(JetNoVlep_pt,JetNoVlep_eta,JetNoVlep_phi,JetNoVlep_mass,JetNoVlep_rawFactor,JetNoVlep_id,JetNoVlep_area,JetNoVlep_jetId,JetNoVlep_muonIdx1,JetNoVlep_muonIdx2,JetNoVlep_muonSubtrFactor,JetNoVlep_neEmEF,JetNoVlep_chEmEF,JetNoVlep_drl1,JetNoVlep_drl2,JetNoVlep_dRinit,JetNoVlep_hadronFlavour,JetNoVlep_partonFlavour,JetNoVlep_btagDeepFlavB), key=lambda x: x[0], reverse=True)
     JetNoVlep_pt=[x[0] for x in JetNoVlep_array]
