@@ -36,6 +36,7 @@ class ZandLepSubSelector(Module):
     self.out.branch("JetNoVlep_drl1", "F", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_drl2", "F", lenVar="nJetNoVlep")
     self.out.branch("JetNoVlep_dRinit", "F", lenVar="nJetNoVlep")
+    self.out.branch("JetNoVlep_btagDeepFlavB", "F", lenVar="nJetNoVlep")
     self.out.branch("SubJetNoVlep_pt", "F", lenVar="nSubJetNoVlep")
     self.out.branch("SubJetNoVlep_eta", "F", lenVar="nSubJetNoVlep")
     self.out.branch("SubJetNoVlep_phi", "F", lenVar="nSubJetNoVlep")
@@ -138,6 +139,7 @@ class ZandLepSubSelector(Module):
     JetNoVlep_drl1=[]
     JetNoVlep_drl2=[]
     JetNoVlep_dRinit=[]
+    JetNoVlep_btagDeepFlavB=[]
     SubJetNoVlep_pt=[]
     SubJetNoVlep_eta=[]
     SubJetNoVlep_phi=[]
@@ -519,6 +521,7 @@ class ZandLepSubSelector(Module):
           JetNoVlep_partonFlavour.append(-99)
         JetNoVlep_area.append(recojets[ij].area)
         JetNoVlep_jetId.append(recojets[ij].jetId)
+        JetNoVlep_btagDeepFlavB.append(recojets[ij].btagDeepFlavB)
         jetv4_tmp=TLorentzVector()
         jetv4_tmp.SetPtEtaPhiM((1-recojets[ij].rawFactor)*recojets[ij].pt,recojets[ij].eta,recojets[ij].phi,(1-recojets[ij].rawFactor)*recojets[ij].mass)
         ak4jet_arr_.append(jetv4_tmp.Clone())
@@ -620,7 +623,7 @@ class ZandLepSubSelector(Module):
         JetNoVlep_muonSubtrFactor.append(1. - ak4_tmp_v4_.Pt()/ak4jet_arr_[ij].Pt())
 
 
-    JetNoVlep_array = sorted(zip(JetNoVlep_pt,JetNoVlep_eta,JetNoVlep_phi,JetNoVlep_mass,JetNoVlep_rawFactor,JetNoVlep_id,JetNoVlep_area,JetNoVlep_jetId,JetNoVlep_muonIdx1,JetNoVlep_muonIdx2,JetNoVlep_muonSubtrFactor,JetNoVlep_neEmEF,JetNoVlep_chEmEF,JetNoVlep_drl1,JetNoVlep_drl2,JetNoVlep_dRinit,JetNoVlep_hadronFlavour,JetNoVlep_partonFlavour), key=lambda x: x[0], reverse=True)
+    JetNoVlep_array = sorted(zip(JetNoVlep_pt,JetNoVlep_eta,JetNoVlep_phi,JetNoVlep_mass,JetNoVlep_rawFactor,JetNoVlep_id,JetNoVlep_area,JetNoVlep_jetId,JetNoVlep_muonIdx1,JetNoVlep_muonIdx2,JetNoVlep_muonSubtrFactor,JetNoVlep_neEmEF,JetNoVlep_chEmEF,JetNoVlep_drl1,JetNoVlep_drl2,JetNoVlep_dRinit,JetNoVlep_hadronFlavour,JetNoVlep_partonFlavour,JetNoVlep_btagDeepFlavB), key=lambda x: x[0], reverse=True)
     JetNoVlep_pt=[x[0] for x in JetNoVlep_array]
     JetNoVlep_eta=[x[1] for x in JetNoVlep_array]
     JetNoVlep_phi=[x[2] for x in JetNoVlep_array]
@@ -639,6 +642,7 @@ class ZandLepSubSelector(Module):
     JetNoVlep_dRinit=[x[15] for x in JetNoVlep_array]
     JetNoVlep_hadronFlavour=[x[16] for x in JetNoVlep_array]
     JetNoVlep_partonFlavour=[x[17] for x in JetNoVlep_array]
+    JetNoVlep_btagDeepFlavB=[x[18] for x in JetNoVlep_array]
 
 
     # re-calculate fatjet information after leptons subtraction
@@ -890,6 +894,7 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("JetNoVlep_drl1", JetNoVlep_drl1)
     self.out.fillBranch("JetNoVlep_drl2", JetNoVlep_drl2)
     self.out.fillBranch("JetNoVlep_dRinit", JetNoVlep_dRinit)
+    self.out.fillBranch("JetNoVlep_btagDeepFlavB", JetNoVlep_btagDeepFlavB)
     self.out.fillBranch("SubJetNoVlep_pt", SubJetNoVlep_pt)
     self.out.fillBranch("SubJetNoVlep_eta", SubJetNoVlep_eta)
     self.out.fillBranch("SubJetNoVlep_phi", SubJetNoVlep_phi)
