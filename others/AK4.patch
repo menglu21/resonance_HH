@@ -1,5 +1,5 @@
---- jetmetUncertainties_init.py	2023-07-06 12:05:24.000000001 +0200
-+++ jetmetUncertainties.py	2023-07-05 22:42:55.000000001 +0200
+--- jetmetUncertainties.py	2023-10-21 23:18:31.000000001 +0200
++++ /afs/cern.ch/user/m/melu/work/HH/CMSSW_10_6_29_old/src/PhysicsTools/NanoAODTools/python/postprocessing/modules/jme/jetmetUncertainties.py	2023-07-05 22:42:55.000000001 +0200
 @@ -83,8 +83,10 @@
                                       self.jerUncertaintyInputFileName)
  
@@ -55,8 +55,3 @@
                  # can be used to undo JER
                  jets_corr_JER.append(jet_pt_jerNomVal)
  
-@@ -1075,4 +1090,3 @@
-     "2018", "Autumn18_V8_MC", ["Total"], jetType="AK4PFPuppi")
- jetmetUncertainties2018AK4PuppiAll = lambda: jetmetUncertaintiesProducer(
-     "2018", "Autumn18_V8_MC", ["All"], jetType="AK4PFPuppi")
--

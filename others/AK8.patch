@@ -1,5 +1,5 @@
---- fatJetUncertainties_init.py	2023-07-06 11:31:07.000000001 +0200
-+++ fatJetUncertainties.py	2023-07-06 11:49:43.000000001 +0200
+--- fatJetUncertainties.py	2023-10-21 23:18:31.000000001 +0200
++++ /afs/cern.ch/user/m/melu/work/HH/CMSSW_10_6_29_old/src/PhysicsTools/NanoAODTools/python/postprocessing/modules/jme/fatJetUncertainties.py	2023-07-06 11:49:43.000000001 +0200
 @@ -93,10 +93,10 @@
              self.genSubJetBranchName = None
              self.doGroomed = False
@@ -27,8 +27,3 @@
  
              if not self.isData:
                  genJet = pairs[jet]
-@@ -935,4 +938,3 @@
-     "2018", "Autumn18_V8_MC", ["Total"], jetType="AK8PFPuppi")
- fatJetUncertainties2018AK8PuppiAll = lambda: fatJetUncertaintiesProducer(
-     "2018", "Autumn18_V8_MC", ["All"], jetType="AK8PFPuppi")
-- 
