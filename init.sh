@@ -34,10 +34,8 @@ if [ "${year}" = "2016apv" ]; then
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL16APV* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/Summer20UL16APV* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
-  cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
-  cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
   cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL16preVFP.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
@@ -56,10 +54,8 @@ if [ "${year}" = "2016" ]; then
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL16_* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
   cp $WORKING_PATH/analysis/others/for_jme/Summer20UL16_* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
-  cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
-  cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
   cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL16postVFP.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
@@ -82,10 +78,8 @@ if [ "${year}" = "2017" ]; then
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2016bUL.txt
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/data/roccor.Run2UL.v5/RoccoR2016aUL.txt
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL17* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
-  cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
-  cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
   cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL17.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
@@ -103,10 +97,8 @@ if [ "${year}" = "2018" ]; then
   echo cleaning unused files
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/*.tgz
   cp $WORKING_PATH/analysis/others/for_jme/Summer19UL18* $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/jme/
-  cp $WORKING_PATH/analysis/others/for_jme/jetmetHelperRun2.py $WORKING_PATH/modules/jme
   
   echo Updating BJet related
-  cp $WORKING_PATH/analysis/others/for_btv/btagSFProducer.py $WORKING_PATH/modules/btv
   rm $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/*
   cp $WORKING_PATH/analysis/others/for_btv/wp_deepJet_UL18.csv $CMSSW_BASE/src/PhysicsTools/NanoAODTools/data/btagSF/
 
