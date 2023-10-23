@@ -1184,7 +1184,7 @@ class HHProducer(Module):
     TT_Mb2_drl1=-99
     TT_Mb2_drl2=-99
 
-    if IsSS and (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepJetL_id)>1:
+    if event.IsSS and (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepJetL_id)>1:
       TT_region_Lbb=True
     if TT_region_Lbb:
       TTCR_b1id_tmp=TightAK4JetCRall_b_DeepJetL_id[0]
@@ -1205,7 +1205,7 @@ class HHProducer(Module):
       TT_Lb2_drl1=TTCR_b2v4.DeltaR(l1v4_tmp)
       TT_Lb2_drl2=TTCR_b2v4.DeltaR(l2v4_tmp)
       
-    if IsSS and (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepJetM_id)>1:
+    if event.IsSS and (l1v4_tmp+l2v4_tmp).M()>105 and len(TightAK4JetCRall_b_DeepJetM_id)>1:
       TT_region_Mbb=True
     if TT_region_Mbb:
       TTCR_b1id_tmp=TightAK4JetCRall_b_DeepJetM_id[0]
@@ -1248,7 +1248,7 @@ class HHProducer(Module):
     DY_j2_drl1=-99
     DY_j2_drl2=-99
 
-    if IsSS and (l1v4_tmp+l2v4_tmp).M()<105 and (l1v4_tmp+l2v4_tmp).M()>75 and len(TightAK4JetCRall_id)>1:
+    if event.IsSS and (l1v4_tmp+l2v4_tmp).M()<105 and (l1v4_tmp+l2v4_tmp).M()>75 and len(TightAK4JetCRall_id)>1:
       DY2J_region=True
       DYCR_j1id_tmp=TightAK4JetCRall_id[0]
       DYCR_j2id_tmp=TightAK4JetCRall_id[1]
