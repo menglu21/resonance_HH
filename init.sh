@@ -14,20 +14,12 @@ export WORKING_PATH="$CMSSW_BASE/src/PhysicsTools/NanoAODTools/python/postproces
 echo $WORKING_PATH
 
 # change the Jet collection to lepton-subtraction Jet collection
-mv $WORKING_PATH/analysis/others/AK4.patch $WORKING_PATH/modules/jme/
-mv $WORKING_PATH/analysis/others/AK8.patch $WORKING_PATH/modules/jme/
-mv $WORKING_PATH/analysis/others/helper.patch $WORKING_PATH/modules/jme/
-cd $WORKING_PATH/modules/jme/
-patch -p0 jetmetUncertainties.py < AK4.patch
-patch -p0 fatJetUncertainties.py < AK8.patch
-patch -p0 jetmetHelperRun2.py < helper.patch
-cd -
+mv $WORKING_PATH/analysis/others/jetmetUncertainties.py $WORKING_PATH/modules/jme/
+mv $WORKING_PATH/analysis/others/fatJetUncertainties.py $WORKING_PATH/modules/jme/
+mv $WORKING_PATH/analysis/others/jetmetHelperRun2.py $WORKING_PATH/modules/jme/
 
 # change the jet collection for BtagSF
-mv $WORKING_PATH/analysis/others/btagSF.patch $WORKING_PATH/modules/btv/
-cd $WORKING_PATH/modules/btv/
-patch -p0 btagSFProducer.py < btagSF.patch
-cd -
+mv $WORKING_PATH/analysis/others/btagSFProducer.py $WORKING_PATH/modules/btv/
 
 if [ "${year}" = "2016apv" ]; then
   echo "Initiating setup for 2016apv......";
