@@ -251,7 +251,7 @@ class btagSFProducer(Module):
                 baseBranchName = 'Jet_btagSF_{}_shape'.format(self.algo)
             else:
                 central_and_systs = self.central_and_systs
-                baseBranchName = 'Jet_btagSF_{}_{}'.format(self.algo, wp)
+                baseBranchName = 'JetNoVlep_btagSF_{}_{}'.format(self.algo, wp)
             for central_or_syst in central_and_systs:
                 if central_or_syst == "central":
                     branchNames[central_or_syst] = baseBranchName
