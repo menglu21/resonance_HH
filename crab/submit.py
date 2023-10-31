@@ -10,7 +10,7 @@ def get_configs():
 configs=get_configs()
 
 for ifile in configs:
-  if skip_signal==1 and 'Signal' in ifile:continue
+  if skip_signal=='1' and 'Signal' in ifile:continue
   if '.pyc' in ifile:continue
   cmds='crab submit -c %s/%s'%(CONFIG_PATH,ifile)
   cmds2="grep requestName %s/%s | grep -o \"'[^']*'\""%(CONFIG_PATH,ifile)
