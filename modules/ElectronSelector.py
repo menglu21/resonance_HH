@@ -72,7 +72,7 @@ class ElectronSelector(Module):
 
     for iele in range(0, event.nElectron):
       if abs(electrons[iele].eta+electrons[iele].deltaEtaSC)>2.5:continue 
-      if abs(electrons[iele].eta)>1.44 and abs(electrons[iele].eta<1.57):continue
+      if abs(electrons[iele].eta)>1.44 and abs(electrons[iele].eta)<1.57:continue
       if electrons[iele].pt<10:continue
       if not electrons[iele].mvaFall17V2noIso_WPL: continue
 
