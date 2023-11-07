@@ -959,6 +959,7 @@ class ZandLepSubSelector(Module):
     self.out.fillBranch("zlep_phi", zlep_phi)
     self.out.fillBranch("zlep_mass", zlep_mass)
 
+    if not (lep_2G0F==1 or lep_1G1F==1 or lep_0G2F==1): return False
     return True
 
 ZandLepSubProducer = lambda: ZandLepSubSelector()
