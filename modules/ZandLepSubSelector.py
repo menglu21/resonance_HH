@@ -276,6 +276,7 @@ class ZandLepSubSelector(Module):
         em_channel=True
         lep_2G0F=1
         l1_pt=goodeles[0].pt
+	l1_id=goodeles[0].id
         l1_pdgid=goodeles[0].pdgid
         l1_rawpt=goodeles[0].rawpt
         l1_eta=goodeles[0].eta
@@ -314,6 +315,7 @@ class ZandLepSubSelector(Module):
         else:
           l1_isfake=1
           l1_pt=fakemuons[0].pt
+	  l1_id=fakemuons[0].id
           l1_pdgid=fakemuons[0].pdgid
           l1_rawpt=fakemuons[0].rawpt
           l1_eta=fakemuons[0].eta
@@ -334,6 +336,7 @@ class ZandLepSubSelector(Module):
         em_channel=True
         lep_1G1F=1
         l1_pt=fakeeles[0].pt
+	l1_id=fakeeles[0].id
         l1_pdgid=fakeeles[0].pdgid
         l1_rawpt=fakeeles[0].rawpt
         l1_eta=fakeeles[0].eta
@@ -353,6 +356,7 @@ class ZandLepSubSelector(Module):
         ee_channel=True
         lep_2G0F=1
         l1_pt=goodeles[0].pt
+	l1_id=goodeles[0].id
         l1_pdgid=goodeles[0].pdgid
         l1_rawpt=goodeles[0].rawpt
         l1_eta=goodeles[0].eta
