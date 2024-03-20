@@ -264,7 +264,7 @@ class btagSFProducer(Module):
         # initialize BTagCalibrationReader
         # (cf. https://twiki.cern.ch/twiki/bin/viewauth/CMS/BTagCalibration )
         self.calibration = ROOT.BTagCalibration(
-            self.algo, os.path.join(self.inputFilePath, self.inputFileName))
+            self.algo, os.path.join(self.inputFilePath, self.inputFileName), False)
         self.readers = {}
         for wp in self.selectedWPs:
             wp_btv = {"l": 0, "m": 1, "t": 2,
