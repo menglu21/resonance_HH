@@ -1,9 +1,11 @@
 # resonance_HH
+## 2024-06-27 - lxplus7 CC7 termination https://cern.ch/otg0147045, since we need CMSSW_10_6_X for the Run2 analysis, we need to use singularity to use the CMSSW_10_6_X
 
-1. release CMSSW_10_6_29
+0. login to lxplus8 or lxplus9, execute "cmssw-el7" to launch the singularity. **This must be done before set up the CMSSW**, otherwise there will be imcompatibility between arch and cmssw
+1. cmsrel CMSSW_10_6_30
 2. Set up NanoAOD tools
    ```bash
-   cd CMSSW_10_6_29/src
+   cd CMSSW_10_6_30/src
 
    git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 
