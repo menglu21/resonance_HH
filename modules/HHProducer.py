@@ -394,7 +394,8 @@ class HHProducer(Module):
     elif nFatjet_MP==1:
       HZ_1F2R=True
       if TightFatJet_drl1[0]>0.8 and TightFatJet_drl2[0]>0.8:
-        if TightFatJet_bbvsQCD[0]>Hbb_threshold and TightFatJet_ccvsQCD[0]<Hcc_threshold:
+        #if TightFatJet_bbvsQCD[0]>Hbb_threshold and TightFatJet_ccvsQCD[0]<Hcc_threshold:
+        if TightFatJet_bbvsQCD[0]>Hbb_threshold:
           HZ_1F2R_case=0
           H_AK8Jet_id=TightFatJet_id[0]
           H_AK8Jet_initid=TightFatJet_initid[0]
@@ -445,7 +446,8 @@ class HHProducer(Module):
       elif len(TightFatJet_drLa08_id)==1:
         H_AK8_tempid=TightFatJet_drLa08_id[0]
         Z_AK8_tempid=TightFatJet_drSm08_id[0]
-        if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid]<Hcc_threshold:
+        #if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid]<Hcc_threshold:
+        if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold:
           HZ_2F0R=True
           HZ_2F0R_case=1
           H_AK8Jet_id=TightFatJet_id[H_AK8_tempid]
@@ -507,7 +509,8 @@ class HHProducer(Module):
         arr_tmp=[0,1]
         arr_tmp.remove(H_AK8_tempid)
         Z_AK8_tempid=arr_tmp[0]
-        if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid]<Hcc_threshold:
+        #if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid]<Hcc_threshold:
+        if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold:
           HZ_2F0R=True
           HZ_2F0R_case=2
           H_AK8Jet_id=TightFatJet_id[H_AK8_tempid]
@@ -530,7 +533,8 @@ class HHProducer(Module):
           Z_AK8Jet_drl1=TightFatJet_drl1[Z_AK8_tempid]
           Z_AK8Jet_drl2=TightFatJet_drl2[Z_AK8_tempid]
 
-        elif TightFatJet_bbvsQCD[Z_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[Z_AK8_tempid]<Hcc_threshold:
+        #elif TightFatJet_bbvsQCD[Z_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[Z_AK8_tempid]<Hcc_threshold:
+        elif TightFatJet_bbvsQCD[Z_AK8_tempid]>Hbb_threshold:
           HZ_2F0R=True
           HZ_2F0R_case=3
           H_AK8Jet_id=TightFatJet_id[Z_AK8_tempid]
@@ -594,7 +598,8 @@ class HHProducer(Module):
       elif len(TightFatJet_drLa08_id)==1:
         H_AK8_tempid=TightFatJet_drLa08_id[0]
         arr_tmp=[x for x in range(nFatjet_MP)]
-        if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid]<Hcc_threshold:
+        #if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid]<Hcc_threshold:
+        if TightFatJet_bbvsQCD[H_AK8_tempid]>Hbb_threshold:
           HZ_2F0R=True
           HZ_2F0R_case=4
           H_AK8Jet_id=TightFatJet_id[H_AK8_tempid]
@@ -648,7 +653,8 @@ class HHProducer(Module):
         H_AK8_tempid_1=TightFatJet_drLa08_id[0]
         H_AK8_tempid_2=TightFatJet_drLa08_id[1]
         if TightFatJet_bbvsQCD[H_AK8_tempid_1]>TightFatJet_bbvsQCD[H_AK8_tempid_2]:
-          if TightFatJet_bbvsQCD[H_AK8_tempid_1]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_1]<Hcc_threshold:
+          #if TightFatJet_bbvsQCD[H_AK8_tempid_1]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_1]<Hcc_threshold:
+          if TightFatJet_bbvsQCD[H_AK8_tempid_1]>Hbb_threshold:
             arr_tmp=[x for x in range(nFatjet_MP)]
             HZ_2F0R=True
             HZ_2F0R_case=5
@@ -673,7 +679,8 @@ class HHProducer(Module):
             Z_AK8Jet_mass=TightFatJet_mass[Z_AK8_tempid]
             Z_AK8Jet_drl1=TightFatJet_drl1[Z_AK8_tempid]
             Z_AK8Jet_drl2=TightFatJet_drl2[Z_AK8_tempid]
-          elif TightFatJet_bbvsQCD[H_AK8_tempid_2]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_2]<Hcc_threshold:
+          #elif TightFatJet_bbvsQCD[H_AK8_tempid_2]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_2]<Hcc_threshold:
+          elif TightFatJet_bbvsQCD[H_AK8_tempid_2]>Hbb_threshold:
             arr_tmp=[x for x in range(nFatjet_MP)]
             HZ_2F0R=True
             HZ_2F0R_case=6
@@ -746,7 +753,8 @@ class HHProducer(Module):
               Z_AK8Jet_drl2=TightFatJet_drl2[Z_AK8_tempid]
 
         else:
-          if TightFatJet_bbvsQCD[H_AK8_tempid_2]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_2]<Hcc_threshold:
+          #if TightFatJet_bbvsQCD[H_AK8_tempid_2]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_2]<Hcc_threshold:
+          if TightFatJet_bbvsQCD[H_AK8_tempid_2]>Hbb_threshold:
             arr_tmp=[x for x in range(nFatjet_MP)]
             HZ_2F0R=True
             HZ_2F0R_case=7
@@ -771,7 +779,8 @@ class HHProducer(Module):
             Z_AK8Jet_mass=TightFatJet_mass[Z_AK8_tempid]
             Z_AK8Jet_drl1=TightFatJet_drl1[Z_AK8_tempid]
             Z_AK8Jet_drl2=TightFatJet_drl2[Z_AK8_tempid]
-          elif TightFatJet_bbvsQCD[H_AK8_tempid_1]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_1]<Hcc_threshold:
+          #elif TightFatJet_bbvsQCD[H_AK8_tempid_1]>Hbb_threshold and TightFatJet_ccvsQCD[H_AK8_tempid_1]<Hcc_threshold:
+          elif TightFatJet_bbvsQCD[H_AK8_tempid_1]>Hbb_threshold:
             arr_tmp=[x for x in range(nFatjet_MP)]
             HZ_2F0R=True
             HZ_2F0R_case=8
@@ -878,7 +887,8 @@ class HHProducer(Module):
           Z_AK8Jet_mass=TightFatJet_mass[Z_AK8_tempid]
           Z_AK8Jet_drl1=TightFatJet_drl1[Z_AK8_tempid]
           Z_AK8Jet_drl2=TightFatJet_drl2[Z_AK8_tempid]
-        elif TightFatJet_bbvsQCD[tmpid_bbqcd_local_2]>Hbb_threshold and TightFatJet_ccvsQCD[tmpid_bbqcd_local_2]<Hcc_threshold:
+        #elif TightFatJet_bbvsQCD[tmpid_bbqcd_local_2]>Hbb_threshold and TightFatJet_ccvsQCD[tmpid_bbqcd_local_2]<Hcc_threshold:
+        elif TightFatJet_bbvsQCD[tmpid_bbqcd_local_2]>Hbb_threshold:
           arr_tmp=[x for x in range(nFatjet_MP)]
           HZ_2F0R=True
           HZ_2F0R_case=10
@@ -903,7 +913,8 @@ class HHProducer(Module):
           Z_AK8Jet_mass=TightFatJet_mass[Z_AK8_tempid]
           Z_AK8Jet_drl1=TightFatJet_drl1[Z_AK8_tempid]
           Z_AK8Jet_drl2=TightFatJet_drl2[Z_AK8_tempid]
-        elif TightFatJet_bbvsQCD[tmpid_bbqcd_local_3]>Hbb_threshold and TightFatJet_ccvsQCD[tmpid_bbqcd_local_3]<Hcc_threshold:
+        #elif TightFatJet_bbvsQCD[tmpid_bbqcd_local_3]>Hbb_threshold and TightFatJet_ccvsQCD[tmpid_bbqcd_local_3]<Hcc_threshold:
+        elif TightFatJet_bbvsQCD[tmpid_bbqcd_local_3]>Hbb_threshold:
           arr_tmp=[x for x in range(nFatjet_MP)]
           HZ_2F0R=True
           HZ_2F0R_case=11
