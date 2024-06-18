@@ -132,6 +132,10 @@ class HHProducer(Module):
     self.out.branch("n_bjet_DeepB_L", "I")
     self.out.branch("n_tight_nob", "I")
     self.out.branch("HT", "F")
+    self.out.branch("HT_jesTotal_up", "F")
+    self.out.branch("HT_jesTotal_down", "F")
+    self.out.branch("HT_jerTotal_up", "F")
+    self.out.branch("HT_jerTotal_down", "F")
     self.out.branch("Had_tau_id","I",lenVar="nTau")
 
     self.out.branch("h_j1_pt", "F")
@@ -292,7 +296,7 @@ class HHProducer(Module):
 
     for ijet in range(0, event.nFatJetNoVlep):
       if abs(fatjets[ijet].eta)>2.4 :continue
-      if not (fatjets[ijet].jetId>1 and fatjets[ijet].pt>300):continue
+      if not (fatjets[ijet].jetId>1 and fatjets[ijet].pt>300 and fatjets[ijet].SDmass>30):continue
       # default jet mass is FatJet_mass
       fatjet_v4_temp.SetPtEtaPhiM(fatjets[ijet].pt_nom,fatjets[ijet].eta,fatjets[ijet].phi,fatjets[ijet].mass_nom)
       # order of jet in LepSubtraction FatJet collection
@@ -332,6 +336,7 @@ class HHProducer(Module):
           TightFatJet_drSm08_id.append(ij_tmp)
 
     # check the fat jet property
+    # WP definition: https://github.com/colizz/boohft-calib/blob/2f96eeed48f314bc7ef84c3e103b4568318370b3/cards/btv_preapp/20221201_bb_ULNanoV9_PNetXbbVsQCD_ak8_inclWP_2016APV.yml#L48
     # for ParticleNetMD, WP for bbVsQCD, in BTV-22-001, HP,MP,LP correspond to signal eff 40%, 60% and 80%
     # 2016apv pre-VFP HP:0.9883, MP:0.9737, LP:0.9088
     # 2016 post-VFP HP:0.9883, MP:0.9735, LP:0.9137
@@ -351,7 +356,7 @@ class HHProducer(Module):
     Hcc_th=-1
     if self.year=="2016apv":Hcc_threshold=0.9252
     if self.year=="2016":Hcc_threshold=0.9252
-    if self.year=="2017":Hcc_threshold=0.9252
+    if self.year=="2017":Hcc_threshold=0.9347
     if self.year=="2018":Hcc_threshold=0.9368
     
     # four categories (for H and Z decay), 2F0R: 2 fat jets, 1F2R: 1 fat and 2 resolved jets, 0F4R: 4 resolved jets
@@ -973,6 +978,7 @@ class HHProducer(Module):
             Z_AK8Jet_drl2=TightFatJet_drl2[2]
 
     self.out.fillBranch("TightFatJet_id", TightFatJet_id)
+    self.out.fillBranch("TightFatJet_initid", TightFatJet_initid)
     self.out.fillBranch("TightFatJet_bbvsQCD", TightFatJet_bbvsQCD)
     self.out.fillBranch("TightFatJet_ccvsQCD", TightFatJet_ccvsQCD)
     self.out.fillBranch("TightFatJet_qqvsQCD", TightFatJet_qqvsQCD)
@@ -1329,9 +1335,21 @@ class HHProducer(Module):
     self.out.fillBranch("DY_j2_drl2",DY_j2_drl2)
 
     HT=0
+    HT_jesTotal_up=0
+    HT_jesTotal_down=0
+    HT_jerTotal_up=0
+    HT_jerTotal_down=0
     for ijet in TightAK4Jet_id:
       HT=HT + jets[ijet].pt_nom
+      HT_jesTotal_up=HT_jesTotal_up + jets[ijet].pt_jesTotalUp
+      HT_jesTotal_down=HT_jesTotal_down + jets[ijet].pt_jesTotalDown
+      HT_jerTotal_up=HT_jerTotal_up + jets[ijet].pt_jerUp
+      HT_jerTotal_down=HT_jerTotal_down + jets[ijet].pt_jerDown
     self.out.fillBranch("HT",HT)
+    self.out.fillBranch("HT_jesTotal_up",HT_jesTotal_up)
+    self.out.fillBranch("HT_jesTotal_down",HT_jesTotal_down)
+    self.out.fillBranch("HT_jerTotal_up",HT_jerTotal_up)
+    self.out.fillBranch("HT_jerTotal_down",HT_jerTotal_down)
 
     TightAK4Jet_nob_id = [x for x in TightAK4Jet_id if (x not in TightAK4Jet_b_DeepJetL_id)]
     nobjet_v4_all = [x for x in jet_v4_all if x not in bjet_v4_all]
